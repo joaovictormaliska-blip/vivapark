@@ -1,0 +1,1502 @@
+/* ==========================================================================
+   FONTES — hospedadas aqui, não no Google.
+   Vindo do Google eram dois domínios externos (DNS + TLS + duas idas) antes
+   de a letra certa existir, e no meio disso a página aparecia com a fonte de
+   reserva e trocava na cara da pessoa. A Michroma é muito mais larga que
+   qualquer reserva, então o título chegava a mudar de tamanho. Servidas do
+   mesmo lugar que o resto, chegam junto com o CSS.
+   `swap` fica: é melhor ler com a fonte de reserva por um instante do que
+   olhar para um texto invisível.
+   ========================================================================== */
+
+@font-face { font-family: "Livvic"; font-style: normal; font-weight: 300;
+  font-display: swap; src: url("../fonts/livvic-300.woff2") format("woff2"); }
+@font-face { font-family: "Livvic"; font-style: normal; font-weight: 400;
+  font-display: swap; src: url("../fonts/livvic-400.woff2") format("woff2"); }
+@font-face { font-family: "Livvic"; font-style: normal; font-weight: 500;
+  font-display: swap; src: url("../fonts/livvic-500.woff2") format("woff2"); }
+@font-face { font-family: "Livvic"; font-style: normal; font-weight: 600;
+  font-display: swap; src: url("../fonts/livvic-600.woff2") format("woff2"); }
+/* A Michroma é `block`, e é a única assim. Medido: ela é 39,5% mais larga
+   que qualquer reserva, então trocar no meio do caminho faz o título inteiro
+   mudar de tamanho na tela.
+   `block` resolve sem esse preço: o título fica invisível até a fonte chegar
+   e então aparece já na Michroma — nunca na reserva. Como o arquivo é local,
+   tem 17KB e está em `preload`, essa espera é de alguns milissegundos.
+   Não uso `optional` aqui: ele desiste em ~100ms e deixa a página inteira na
+   fonte de reserva, que é pior do que esperar um instante.
+   A Livvic fica em `swap`: medida em 99,3% da largura da Arial, a troca dela
+   não desloca nada, e assim o texto é legível desde o primeiro quadro. */
+@font-face { font-family: "Michroma"; font-style: normal; font-weight: 400;
+  font-display: block; src: url("../fonts/michroma-400.woff2") format("woff2"); }
+
+/* ==========================================================================
+   Vivapark Porto Belo
+   Tipografia: Livvic — uma família só, do peso 300 ao 700. Os títulos jogam
+   com peso dentro da mesma frase (claro + negrito) em vez de trocar de fonte.
+   Acento: #47B761, o verde da própria marca — não é cor inventada.
+   ========================================================================== */
+
+:root {
+  /* papel — pedra clara, não creme.
+     O creme morno (#F7F3EA, vizinho de #F4F1EA) é o fundo que toda página
+     gerada usa hoje; e aqui ele puxava para o amarelo, brigando com os verdes.
+     Esta família tem o mesmo valor de claridade, só que com fundo de pedra e
+     mato: é o calçamento e a neblina do parque, não um papel envelhecido. */
+  --papel:      #F2F4EE;
+  --papel-2:    #E9ECE3;
+  --areia:      #D7DCCD;
+
+  /* mata */
+  --mata:       #0B2318;
+  --mata-2:     #15382A;
+  --tinta:      #14211A;
+  --tinta-70:   rgba(20,33,26,.70);
+  --tinta-45:   rgba(20,33,26,.45);
+  --viva:       #47B761;   /* verde da marca */
+  --viva-fundo: #2E8F46;   /* mesmo verde, escurecido p/ texto sobre papel */
+
+  /* claros sobre mata */
+  --sobre:      #EDF1E9;
+  --sobre-70:   rgba(237,241,233,.72);
+  --sobre-40:   rgba(237,241,233,.42);
+  --sobre-14:   rgba(237,241,233,.14);
+
+  --display: "Livvic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --txt:     var(--display);
+
+  /* Fonte do título da abertura. PROVISÓRIA: a do cliente é a Band/Bank
+     Gothic, que não está em nenhum projeto desta pasta e não existe no
+     Google Fonts. Quando o arquivo chegar (.woff2 em vivapark/fonts/),
+     basta declarar o @font-face e trocar o primeiro nome desta linha. */
+  --titulo-lp: "Michroma", "Bank Gothic", "Arial Black", Impact, sans-serif;
+
+  --curva:   cubic-bezier(.22,.61,.24,1);
+  --curva-2: cubic-bezier(.65,0,.35,1);
+
+  --faixa:   1240px;
+  --gut:     clamp(20px, 5vw, 64px);
+  --topo-h:  84px;  /* altura da faixa creme no alto */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+html:focus-within { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--txt);
+  font-size: clamp(16px, 1.02vw, 17.5px);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, svg { max-width: 100%; }
+img { border-style: none; }
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--viva);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.pular {
+  position: fixed; left: 12px; top: -80px; z-index: 310;
+  background: var(--mata); color: var(--sobre);
+  padding: 12px 18px; border-radius: 999px;
+  font-size: .9rem; font-weight: 600; text-decoration: none;
+  transition: top .2s;
+}
+.pular:focus { top: 12px; }
+
+/* régua de leitura ----------------------------------------------------- */
+.regua {
+  position: fixed; left: 0; top: 0; z-index: 120;
+  height: 2px; width: 0;
+  background: var(--viva);
+  pointer-events: none;
+}
+
+.faixa {
+  width: 100%;
+  max-width: var(--faixa);
+  margin-inline: auto;
+  padding-inline: var(--gut);
+}
+
+/* ==========================================================================
+   TIPOGRAFIA
+   Livvic, uma família só, do 300 ao 700 — fonte padrão mesmo, sem invenção.
+   ========================================================================== */
+
+/* Uma família só. O contraste vem do peso: 300 para a parte leve do título,
+   600/700 para a que carrega a ênfase. */
+.titulo, .titulo-hero, h1, h2, h3,
+.marcos b, .distancias b, .cartao-forte, .op figcaption b, .espaco h3 {
+  font-family: var(--display);
+  font-weight: 300;
+  letter-spacing: -.018em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.titulo {
+  margin: 0 0 .5em;
+  font-size: clamp(1.95rem, 4vw, 3.1rem);
+}
+.titulo-grande { font-size: clamp(2.2rem, 5vw, 3.8rem); }
+
+/* O destaque dentro do título é só de peso. Pintar uma palavra de verde no
+   meio da frase é o atalho mais batido que existe — e aqui ele competia com o
+   verde da marca, que precisa significar "isto é um botão, isto é um link". */
+.titulo em {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.lead {
+  margin: 0 0 1.5rem;
+  max-width: 54ch;
+  font-size: clamp(1.045rem, 1.35vw, 1.17rem);
+  color: var(--tinta-70);
+}
+.lead em { font-style: italic; color: var(--tinta); }
+.lead-claro { color: var(--sobre-70); }
+.lead-claro em { color: var(--sobre); }
+
+/* Abertura de seção em duas colunas: título grande à esquerda, texto de apoio
+   à direita, num corpo de leitura curto. É o que dá ritmo — as seções de
+   abertura centrada (operações, visita) continuam centradas de propósito,
+   para a página não virar uma coluna só do começo ao fim. */
+.cabeca { margin-bottom: clamp(2.4rem, 4.5vw, 3.6rem); }
+.cabeca .lead { max-width: 46ch; margin-bottom: 0; }
+@media (min-width: 981px) {
+  /* só vira duas colunas quando existe uma segunda coluna para preencher —
+     senão o título fica espremido num terço da largura à toa */
+  .cabeca:not(.cabeca-centro):has(.lead) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(2.4rem, 5vw, 5rem);
+    align-items: end;
+  }
+  .cabeca:not(.cabeca-centro):has(.lead) .titulo { margin-bottom: 0; }
+}
+.cabeca-centro { max-width: 62ch; margin-inline: auto; text-align: center; }
+.cabeca-centro .titulo { max-width: none; }
+.cabeca-centro .lead { margin-inline: auto; }
+
+.nota { margin: 1.4rem 0 0; font-size: .845rem; color: var(--sobre-40); }
+/* duas coisas diferentes: `auto` no eixo horizontal centra a FAIXA (zerar
+   esse eixo a jogava para a esquerda) e o `text-align` centra o TEXTO dentro
+   dela. Faltando qualquer um dos dois, fica torto. */
+.fonte-dado {
+  margin: 1.4rem auto 0;
+  font-size: .8rem; color: var(--tinta-45);
+  text-align: center;
+}
+
+/* ==========================================================================
+   BOTÕES E ELOS
+   ========================================================================== */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 52px;
+  padding: 0 1.65rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--txt);
+  font-size: .975rem; font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .28s var(--curva), background-color .28s, color .28s, border-color .28s;
+}
+.btn-principal { background: var(--viva); color: #06180F; }
+.btn-principal:hover { background: #59CB73; transform: translateY(-2px); }
+
+.btn-fantasma {
+  background: transparent;
+  color: currentColor;
+  border-color: var(--sobre-40);
+}
+.btn-fantasma:hover { border-color: var(--sobre); transform: translateY(-2px); }
+
+.elo {
+  display: inline-flex; align-items: center; gap: .55rem;
+  min-height: 44px;
+  font-weight: 600; font-size: .95rem;
+  color: var(--viva-fundo);
+  text-decoration: none;
+}
+.elo::after {
+  content: ""; width: 1.45rem; height: 1px;
+  background: currentColor;
+  transition: width .3s var(--curva);
+}
+.elo:hover::after { width: 2.5rem; }
+
+/* ==========================================================================
+   TOPO — faixa creme fixa, como na referência: ela não flutua sobre a foto,
+   a foto é que começa abaixo dela. Some a necessidade de véu e de trocar a
+   logo de cor conforme a rolagem.
+   ========================================================================== */
+
+/* A barra não existe na primeira dobra: ela desce quando a pessoa começa a
+   explorar o site. `visibility` entra junto de propósito — só opacidade
+   deixaria os links alcançáveis pelo Tab enquanto a barra está invisível. */
+.topo {
+  position: fixed; inset: 0 0 auto; z-index: 110;
+  background: rgba(247,243,234,.93);
+  backdrop-filter: saturate(150%) blur(14px);
+  box-shadow: 0 1px 0 rgba(20,33,26,.10);
+  transform: translateY(-100%);
+  opacity: 0; visibility: hidden;
+  transition: transform .5s var(--curva), opacity .4s var(--curva), visibility .5s;
+}
+.topo.fixo { transform: none; opacity: 1; visibility: visible; }
+
+.topo-linha {
+  display: flex; align-items: center; gap: clamp(1rem, 3vw, 2.6rem);
+  min-height: var(--topo-h);
+}
+
+/* padding vertical só para o link da marca alcançar 44px de alvo de toque */
+.topo-marca { display: block; flex: 0 0 auto; line-height: 0; padding-block: 7px; }
+/* sem `img` no seletor: qualificar por tag daria especificidade maior que a
+   das classes abaixo e as duas logos apareceriam ao mesmo tempo */
+.topo-marca .marca-clara,
+.topo-marca .marca-escura { width: clamp(118px, 11vw, 152px); height: auto; }
+.topo-marca .marca-clara { display: none; }
+.topo-marca .marca-escura { display: block; }
+
+.topo-nav { display: flex; gap: clamp(.9rem, 2vw, 1.85rem); margin-left: auto; }
+.topo-nav a {
+  position: relative;
+  padding: .3rem 0;
+  font-size: .925rem; font-weight: 500;
+  color: var(--tinta-70);
+  text-decoration: none;
+  transition: color .25s;
+}
+.topo-nav a::after {
+  content: ""; position: absolute; left: 0; bottom: -1px;
+  width: 0; height: 1px; background: currentColor;
+  transition: width .3s var(--curva);
+}
+.topo-nav a:hover { color: var(--tinta); }
+.topo-nav a:hover::after { width: 100%; }
+
+.topo-cta { min-height: 46px; padding: 0 1.3rem; font-size: .92rem; }
+
+.menu-botao {
+  display: none;
+  margin-left: auto;
+  width: 46px; height: 46px;
+  padding: 0;
+  background: none; border: 0; cursor: pointer;
+}
+.menu-botao span {
+  display: block; width: 24px; height: 1.5px; margin: 5px auto;
+  background: var(--tinta);
+  transition: transform .3s var(--curva);
+}
+.topo.aberto .menu-botao span:first-child { transform: translateY(3.25px) rotate(45deg); }
+.topo.aberto .menu-botao span:last-child  { transform: translateY(-3.25px) rotate(-45deg); }
+/* ==========================================================================
+   01 · ABERTURA — a foto ocupa a tela inteira, sem barra por cima.
+   O cabeçalho só entra quando a pessoa começa a rolar (ver bloco TOPO).
+   ========================================================================== */
+
+/* O palco não desenha nada: ele só EXISTE como altura de rolagem. A abertura
+   fica grudada no topo enquanto ele passa, e esse curso é o que o zoom usa.
+   No celular e em movimento reduzido o palco some e a abertura volta a ser
+   uma seção comum de uma tela. */
+.hero-palco { position: relative; }
+
+.hero {
+  position: relative;
+  /* rodapé, não centro: é onde o escurecido está. Com os botões e a linha de
+     ícones removidos, sobrou pouco texto, e centralizado ele caía no meio da
+     foto — em cima do céu claro, sem contraste nenhum. */
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 100svh;
+  padding: clamp(5.5rem, 12vh, 8rem) 0 clamp(2.6rem, 6vh, 4.6rem);
+  background: var(--mata);
+  color: var(--sobre);
+  overflow: hidden;
+}
+
+/* A CENA que o zoom amplia: foto, título e a cópia mascarada. Marca, selo e
+   a linha de local ficam fora daqui de propósito — são interface, e interface
+   não amplia junto com a imagem.
+
+   `display: contents` no celular não é detalhe: lá não existe zoom, e se este
+   bloco virasse uma caixa posicionada o título sairia do fluxo da coluna e
+   subiria para o topo, por cima do logo. Com `contents` ele não gera caixa
+   nenhuma e os filhos continuam sendo itens da coluna, como sempre foram. */
+.hero-zoom { display: contents; }
+.hero-frente-caixa { display: contents; }   /* idem: a `picture` não vira item */
+
+/* ==========================================================================
+   A SEQUÊNCIA DE ABERTURA — cortina, voo e estouro
+   Portado do Evolution, que é o mesmo efeito já no ar. Três peças:
+   a cortina que encolhe, a luz da janela que floresce, e o estouro que
+   entrega na dobra seguinte. Nada disso existe sem script nem no celular.
+   ========================================================================== */
+
+/* ---- a cortina ---- */
+.hero-cortina { display: none; }
+body.js .hero-cortina {
+  display: block;
+  position: fixed; inset: 0 0 auto 0; z-index: 150;
+  height: 100svh; overflow: hidden;
+  background: var(--papel);
+  will-change: clip-path, opacity;
+}
+.hero-cortina-in {
+  position: absolute; left: 0; right: 0; top: 50%;
+  padding: 0 24px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  transform: translateY(-50%);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+.hero-cortina-risco { display: block; width: 54px; height: 1px; background: var(--viva-fundo); }
+.hero-cortina-marca { margin: 0; line-height: 0; }
+.hero-cortina-marca svg {
+  display: block;
+  width: clamp(190px, 26vw, 330px);
+  height: auto;
+}
+.hero-cortina-sub {
+  margin: 0;
+  font-size: clamp(.5rem, 1.35vw, .58rem);
+  letter-spacing: .18em; margin-right: -.18em;
+  text-transform: uppercase; text-align: center;
+  color: var(--tinta-45);
+}
+.hero-cortina-seta {
+  position: absolute; left: 50%; bottom: 46px;
+  width: 1px; height: 38px;
+  background: linear-gradient(180deg, rgba(20,33,26,0), rgba(20,33,26,.75));
+  animation: cortinaSeta 2.2s ease-in-out infinite;
+}
+.hero-cortina-seta::after {
+  content: ""; position: absolute; left: -4px; bottom: 0;
+  width: 10px; height: 10px;
+  border-right: 1px solid rgba(20,33,26,.75);
+  border-bottom: 1px solid rgba(20,33,26,.75);
+  transform: rotate(45deg);
+}
+@keyframes cortinaSeta {
+  0%, 100% { transform: translateY(-6px); opacity: .45; }
+  50%      { transform: translateY(2px);  opacity: 1; }
+}
+/* No celular a marca cresce e abre o espacejamento: com a conta de tela larga
+   ela caía para 18px e sumia no meio da tela vazia. */
+@media (max-width: 640px) {
+  .hero-cortina-marca svg { width: min(62vw, 300px); }
+  .hero-cortina-seta { bottom: 36px; }
+}
+/* A marca se escreve traço a traço assim que a página abre. As unidades aqui
+   são os caminhos do SVG do logotipo, não letras de texto — por isso nada de
+   `display: inline-block`, que não vale dentro de SVG. A regra de palavra fica
+   para o caso de a marca voltar a ser texto. */
+.hero-palavra { display: inline-block; white-space: nowrap; }
+.hero-palavra .hero-letra { display: inline-block; }
+body.js .hero-cortina .hero-letra {
+  opacity: 0; transform: translate3d(-18px,0,0);
+  will-change: opacity, transform;
+  transition: opacity .66s cubic-bezier(.22,.61,.36,1),
+              transform .66s cubic-bezier(.22,.61,.36,1);
+}
+body.js .hero-cortina [data-intro].entrou .hero-letra { opacity: 1; transform: none; }
+
+/* ---- a luz da janela ---- */
+.hero-brilho { display: none; }
+.hero-flash  { display: none; }
+
+@media (min-width: 981px) {
+  body.js .hero-brilho {
+    display: block;
+    position: absolute; inset: 0; z-index: 3;
+    pointer-events: none; mix-blend-mode: screen;
+    opacity: var(--brilho, 0);
+    background: radial-gradient(circle at var(--bx, 50%) var(--by, 50%),
+      rgba(255,252,240,.98) 0%, rgba(255,250,232,.80) 3%,
+      rgba(252,247,224,.42) 7%, rgba(250,245,220,0) 16%);
+  }
+  body.js .hero-flash {
+    display: block;
+    position: absolute; inset: 0; z-index: 5;
+    pointer-events: none;
+    background: #FBFAF3;
+    opacity: 0;
+  }
+}
+
+@media (min-width: 981px) {
+  /* `body.js` de propósito: quem anima é o script. Sem ele o palco não pode
+     existir, senão sobram três telas de rolagem morta sobre uma foto parada. */
+  body.js .hero-palco { height: 320svh; }
+  body.js .hero { position: sticky; top: 0; height: 100svh; min-height: 0; z-index: 2; }
+
+  /* A PRÓXIMA CENA sobe uma tela inteira, para trás da abertura. É isso que
+     faz o zoom desembocar nela: quando a abertura se dissolve, o "Melhor do
+     que viver perto de um parque" já está no lugar, não vem depois.
+
+     A margem é calculada, não estimada. O palco tem 320svh e a abertura gruda
+     no topo durante (320 − 100) = 220svh. Para a dobra encostar no topo da
+     tela exatamente no quadro em que o estouro termina de abrir (p = 0,88):
+
+         margem = 320 − 0,88 × 220 = 126,4svh
+
+     Trocar FLASH_D no script pede recalcular isto junto. */
+  body.js .bairro-palco { position: relative; z-index: 1; margin-top: -126.4svh; }
+
+  /* A TRAVA. O zoom desemboca aqui e a dobra para — rolar não move nada por
+     70svh, até que o leitor empurre de novo. É o mesmo mecanismo do palco da
+     abertura, e não rouba a rolagem de ninguém: nenhum evento é interceptado,
+     o navegador só prende o bloco dentro de um recipiente mais alto.
+
+     O curso da trava é a diferença de altura entre o recipiente e a dobra.
+     Daí o vão em fluxo, e não uma altura fixa: a dobra muda de altura com a
+     largura da tela, e a trava continua valendo 70svh em qualquer uma.
+
+     O vão é um ::after, NÃO padding-bottom. O retângulo que prende um sticky
+     é a caixa de CONTEÚDO do pai, e padding fica fora dela: com padding o
+     curso dá zero e a dobra passa reto. Um filho em fluxo cresce a caixa de
+     conteúdo, que é o que a grudagem mede.
+
+     Quando solta, a dobra fica encostada no fundo do recipiente e cobre o
+     vão — não sobra espaço em branco antes da próxima seção.
+
+     Os 26,4svh finais do palco da abertura caem dentro desta trava. Não há
+     conflito: ali a cena já está escondida e nada mais se move. */
+  body.js .bairro { position: sticky; top: 0; }
+  body.js .bairro-palco::after { content: ""; display: block; height: 70svh; }
+  .hero-zoom {
+    display: block;
+    position: absolute; inset: 0;
+    transform-origin: 50% 50%;   /* o JS move para a janela da torre */
+    will-change: transform;
+  }
+
+  /* DURANTE O VOO nada aqui dentro pode virar camada própria da GPU.
+     Uma camada ampliada 10x vira uma textura de dez vezes o tamanho do palco.
+     A placa tem teto (~16k px): o que passa do teto SOME EM RETÂNGULOS, e o
+     retângulo fica preso na tela quando se rola de volta. Sem camada
+     promovida, o navegador desenha só o pedaço visível, em qualquer
+     ampliação. Esta proteção é do Evolution — e faltava aqui. */
+  body.js .hero.voando .hero-zoom,
+  body.js .hero.voando .hero-foto img,
+  body.js .hero.voando .hero-frente,
+  body.js .hero.voando .hero-brilho { will-change: auto; }
+}
+@supports not (height: 100svh) {
+  @media (min-width: 981px) {
+    body.js .hero-palco { height: 320vh; }
+    body.js .hero { height: 100vh; }
+    body.js .bairro-palco { margin-top: -126.4vh; }
+    body.js .bairro-palco::after { height: 70vh; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-palco { height: auto !important; }
+  .hero { position: relative !important; height: auto !important; min-height: 100svh; }
+  .hero-zoom { transform: none !important; }
+  .hero { visibility: visible !important; }
+  .bairro-palco { margin-top: 0 !important; }
+  .bairro-palco::after { display: none !important; }
+  .bairro { position: static !important; }
+}
+
+/* A miniatura de 28px embutida aqui é o que a tela mostra no primeiro quadro.
+   Sem ela, enquanto a foto de verdade não decodifica, sobra o verde chapado
+   do hero — era o "pisca verde" ao recarregar. Pesa 688 bytes e vem dentro
+   do próprio CSS, então não há requisição nenhuma para ela. */
+.hero-foto {
+  position: absolute; inset: 0;
+  margin: 0;
+  overflow: hidden;
+  background-image: url("data:image/webp;base64,UklGRjgDAABXRUJQVlA4WAoAAAAgAAAAGwAAEgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggSgEAAFAHAJ0BKhwAEwA+lUScSiWjoqGoCqiwEolAF2QkBHh/FT9DewB5QHqr9Dn9bg7U+8LNb0liZF6VhU7W+foSgRhGnwAA/pCSi7m8W/zxJauuYio/1bQ3mx9eWXFndZffzNH04wvsqJMdkqMc+zUc8UjkeMISDXlW2zky6dtNd+qN6I5879GITTKbfWFJy1fgWUyWy5LWQv83EVX6EYOcfXtnChCBACDIN63DCuOzXoe7e50TRSzN026eK9vin/oG//mJi3PExmVlswthyDpCYvZ9Z10uaCdFAZumJtiDLOl94P20iL+NTsRzAuSpxlqNZVkF48yGvde6Lou0Jz//jCIWH73/9c9Dv2r8wUT5avYybjbsJzS+IXc3TGDwlOVuIOhar5C1pgWtsDBFxuu0k+1NTuQ/gwhZp48ebBBZVnsSq0mglTK07MgAAA==");
+  background-size: cover;
+  background-position: 50% 45%;
+}
+.hero-foto img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 45%;
+}
+/* Sem o degradê verde. Sobrou só um escurecido NEUTRO e fraco no canto onde
+   o texto se apoia — sem nada ali, as maiúsculas claras caem sobre a grama
+   no sol e somem. É cinza-chumbo, não verde: não tinge a imagem. */
+/* Fica no HERO, não na foto: assim ele não amplia junto com o zoom e o
+   escurecido continua ancorado no rodapé da tela do começo ao fim. */
+.hero::after {
+  content: ""; position: absolute; inset: 0;
+  /* O escurecido existe para o texto da abertura se apoiar. Quando o texto
+     sai de cena, no meio do voo, ele tem de sair junto — é um pseudo-elemento
+     do `.hero`, e esconder só a cena não o alcança: ele continuava pintando
+     por cima da dobra seguinte depois da troca. Era o "efeito preto". */
+  opacity: var(--escuro, 1);
+  /* Camada 0 no celular, de propósito. Ali o `.hero-zoom` é `display:
+     contents`, então o título é filho direto do hero e disputa empilhamento
+     com este degradê — na camada 3 o escurecido passava POR CIMA das letras e
+     apagava o título junto com a foto. No desktop ele volta para 3, porque lá
+     precisa cobrir o bloco do zoom inteiro (ver adiante). */
+  z-index: 0;
+  /* Celular: o texto todo mora no rodapé, então o escurecido é curto e forte
+     ali, em vez de alto e fraco. Medido sobre os pixels reais da foto — com o
+     degradê antigo o pior ponto do título dava 1,94:1, ilegível. */
+  background:
+    linear-gradient(to right,
+      rgba(12,16,14,.34) 0%, rgba(12,16,14,.18) 34%, rgba(12,16,14,0) 68%),
+    linear-gradient(to top,
+      rgba(12,16,14,.88) 0%, rgba(12,16,14,.72) 18%,
+      rgba(12,16,14,.34) 36%, rgba(12,16,14,0) 54%);
+  pointer-events: none;
+}
+
+/* a imagem é render: o selo é obrigatório e não pode depender de rolagem */
+.hero-selo-img {
+  position: absolute; right: var(--gut); top: 20px; z-index: 3;
+  padding: .38rem .78rem;
+  border-radius: 999px;
+  background: rgba(12,16,14,.55);
+  backdrop-filter: blur(6px);
+  color: var(--sobre-70);
+  font-size: .66rem; font-weight: 500;
+  letter-spacing: .01em;
+}
+
+/* a barra sumiu da primeira dobra, então a marca fica solta sobre a foto —
+   sem isto a tela de entrada não teria identificação nenhuma */
+.hero-marca {
+  position: absolute; left: var(--gut); top: 26px; z-index: 3;
+  display: block; line-height: 0;
+  padding-block: 7px;
+}
+.hero-marca img { width: clamp(118px, 11vw, 152px); height: auto; display: block; }
+
+/* Sombra no texto em vez de mais escurecido no fundo: compra contraste
+   exatamente onde a letra está, sem apagar a imagem atrás dela. */
+.hero-local { position: relative; z-index: 4; }
+.hero-marca, .hero-selo-img { z-index: 4; }
+.hero-local, .titulo-hero {
+  text-shadow: 0 1px 16px rgba(8,12,10,.62), 0 1px 3px rgba(8,12,10,.38);
+}
+
+.hero-local {
+  display: flex; align-items: center; gap: .55rem;
+  /* `auto` nos lados, não `0`: esta linha também é uma `.faixa`, e um atalho
+     com 0 nas laterais anula o margin-inline:auto dela e joga o bloco para a
+     borda. É a terceira vez que isso morde neste projeto. */
+  margin: 0 auto clamp(1rem, 2vw, 1.5rem);
+  font-size: .8rem; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--sobre);
+}
+.hero-local svg { flex: 0 0 auto; }
+
+/* ---- título empilhado, uma palavra por linha ----
+   A fonte é a do cliente (Band/Bank Gothic). Enquanto o arquivo não chega,
+   --titulo-lp aponta para a Michroma, que tem a mesma pegada de caixa alta
+   larga e quadrada; trocar depois é mexer só nesta variável. */
+.titulo-hero {
+  /* POSICIONADO de propósito, mesmo no celular: o h1 é filho direto do hero,
+     e a foto é absoluta. Elemento estático perde para elemento posicionado na
+     hora de pintar — sem isto o título fica ATRÁS da foto e some. */
+  position: relative; z-index: 1;
+  margin: 0 0 clamp(1.4rem, 2.6vw, 2rem);
+  font-family: var(--titulo-lp);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 4.3vw, 3.7rem);
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  text-wrap: nowrap;
+}
+.titulo-hero span { display: block; }
+.titulo-hero span + span { margin-top: .08em; }
+
+/* No desktop o título sai do fluxo e sobe para o céu, em tinta escura: ali o
+   claro de antes sumiria. Fica no nível 1, abaixo do recorte (2), e é isso
+   que o põe atrás dos prédios. No celular nada disso vale — ele continua um
+   item normal da coluna, claro, e o recorte nem é baixado.
+   Este bloco vem DEPOIS da regra acima de propósito: media query não soma
+   especificidade, então se viesse antes a regra geral o desfaria. */
+/* ---- no desktop: UMA LINHA, grande, na faixa de céu ----
+   A foto do hero foi recomposta com 340px de céu acrescentados em cima (ver
+   NOTAS-DESIGN.md): os prédios desceram no quadro e abriu-se uma faixa limpa
+   onde o título cabe inteiro, numa linha só e em tinta escura.
+
+   A foto também foi deslocada 190px para a esquerda, tirando do quadro o
+   único prédio que a moldura cortava. Por isso o céu está limpo de ponta a
+   ponta e o título pode começar na margem normal — o que o deixa maior. */
+/* A camada da frente é PNG, não WebP, e cobre só a torre mais alta.
+   As duas decisões consertam o mesmo defeito, que apareceu como um
+   "quadrado de luz" sobre os prédios:
+
+   Repintar por cima com um arquivo COMPRIMIDO COM PERDAS devolve pixels
+   ligeiramente diferentes dos do fundo. A diferença é pequena (média medida
+   de 2,5 em 255), mas é sistemática e tem contorno retangular — a área
+   repintada — e o olho enxerga o bloco. Em PNG, que é sem perdas e foi
+   gerado a partir dos pixels já decodificados do fundo, a diferença medida
+   caiu para **1 em 255 no pior pixel**: o bloco some.
+
+   E só fica opaco o que pode de fato encostar no título: as 243 colunas da
+   torre que sobe acima da linha 470, entre a linha do horizonte e a 620.
+   Onde é transparente, quem aparece é o fundo, intacto — nenhum outro
+   prédio é redesenhado. (213 KB; a versão anterior, com a foto inteira em
+   WebP de 1280, tinha 363 KB e era justamente a que sujava tudo.)
+
+   Encaixe: mesmo enquadramento (`cover`, `50% 45%`) e mesma ampliação de
+   entrada do fundo, senão as duas camadas desencontram.
+
+   Empilhamento: 0 foto · 1 título · 2 recorte · 4 marca, selo e o bloco de
+   baixo, que precisa continuar clicável. */
+.hero-frente { display: none; }
+@media (min-width: 981px) {
+  .hero-frente {
+    display: block;
+    position: absolute; inset: 0; z-index: 2;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    /* IGUAL ao fundo, item por item: mesmo arquivo, mesmo tipo de elemento,
+       mesmo object-fit, mesmo object-position. É o que garante que as duas
+       camadas sejam o mesmo pixel. */
+    object-fit: cover;
+    object-position: 50% 45%;
+    /* A máscara (só alfa) é o que decide o que desta cópia aparece: apenas o
+       topo da torre. `cover` + `50% 45%` aqui também, para a máscara cair
+       exatamente sobre a mesma parte da foto. */
+    -webkit-mask-image: url("../images/hero-mascara.png");
+            mask-image: url("../images/hero-mascara.png");
+    -webkit-mask-size: cover;     mask-size: cover;
+    -webkit-mask-position: 50% 45%; mask-position: 50% 45%;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  }
+  body.js .hero-frente { transform: scale(1.05); }
+  body.js .hero.pronta .hero-frente { transform: none; transition: transform 1.5s var(--curva); }
+}
+
+@media (min-width: 981px) {
+  .titulo-hero {
+    position: absolute; z-index: 1;
+    left: 0;
+    /* O título fica NO CÉU, na altura do topo da torre maior — é só a pontinha
+       dela que passa na frente das letras. "Atrás dos prédios" é camada, não
+       posição: descer o título para a linha dos telhados foi erro meu.
+
+       A referência é a linha 343 da foto (o topo da torre), e `cover` +
+       `50% 45%` leva isso para a tela de dois jeitos, conforme a proporção:
+
+         tela larga  (corta em cima e embaixo) →  45vh − 12,37vw
+         tela alta   (corta nos lados)         →  26,59vh
+
+       `min()` escolhe sozinho, e as duas contas se encontram no ponto em que
+       a tela tem a mesma proporção da foto (1,488). Sem o `min()` isso quebra:
+       numa tela alta o título descia demais e a torre engolia 12% das letras
+       em vez de 2%. O clamp é a rede para formatos extremos. */
+    top: clamp(5rem, calc(min(45vh - 12.37vw, 26.59vh) - .68em), 16rem);
+    width: 100%; margin: 0;
+    max-width: none;              /* a `.faixa` prende em 1240; aqui é sangria */
+    padding-inline: clamp(16px, 2.4vw, 34px);
+    /* 3,4vw é o maior corpo em que a frase inteira ainda cabe entre as duas
+       margens. Acima disso ela vaza, porque o título é nowrap e tem de
+       continuar numa linha só. */
+    font-size: clamp(1.6rem, 3.4vw, 4.75rem);
+    line-height: 1;
+    letter-spacing: -.016em;
+    /* A Michroma só tem um peso. O traço engrossa a letra sem mexer na
+       métrica — o avanço de cada glifo continua o mesmo, então a linha não
+       muda de largura. */
+    -webkit-text-stroke: .9px currentColor;
+    color: var(--mata);
+    text-shadow: none;
+  }
+  /* as quatro palavras passam a correr na mesma linha; o espaço entre elas é
+     a quebra de linha do HTML, que inline vira um espaço só */
+  .titulo-hero span { display: inline; }
+  .titulo-hero span + span { margin-top: 0; }
+  /* No desktop o escurecido sobe para a camada 3: ali o `.hero-zoom` é um
+     bloco com transformação, logo um contexto de empilhamento fechado, e o
+     degradê precisa ficar acima dele inteiro. O título está lá no céu, onde
+     este degradê já é transparente, então não há risco de apagá-lo. */
+  .hero::after {
+    z-index: 3;
+    background: linear-gradient(to top,
+      rgba(12,16,14,.70) 0%, rgba(12,16,14,.46) 20%,
+      rgba(12,16,14,.16) 38%, rgba(12,16,14,0) 54%);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-selo-img { right: auto; left: var(--gut); top: auto; bottom: 18px; }
+  .hero-marca { top: 20px; }
+}
+
+/* ==========================================================================
+   02 · MARCOS
+   ========================================================================== */
+
+/* O respiro de cima é o único que existe entre a lista da dobra e o filete
+   dos números — o .bairro não põe nenhum. Ver a nota lá. */
+.marcos-sec { padding: clamp(2.6rem, 4.6vw, 3.8rem) 0 clamp(3.6rem, 7vw, 5.6rem); }
+
+.marcos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: clamp(1.6rem, 3.4vw, 2.6rem);
+  /* `margin: 0` aqui zerava o `margin-inline: auto` da .faixa e jogava a
+     faixa toda para a esquerda. Zerar só o eixo vertical mata a margem
+     padrão do <dl> sem tirar a centralização. */
+  margin-block: 0;
+  padding-top: clamp(1.4rem, 3vw, 2.2rem);
+  border-top: 1px solid var(--areia);
+}
+/* rótulos de uma e de duas linhas convivem na mesma fileira: encostando os
+   blocos por baixo, as linhas de base dos números ficam alinhadas */
+.marcos > div {
+  min-width: 0;
+  display: flex; flex-direction: column;
+  justify-content: flex-end; align-items: center;
+  text-align: center;
+}
+/* A hierarquia aqui já vem do tamanho: o rótulo tem um sexto do corpo do
+   número que ele nomeia. Caixa alta destacada em cima disso não informava
+   nada — só repetia o maneirismo do título da abertura, que é onde a caixa
+   alta precisa significar alguma coisa. */
+.marcos dt {
+  margin-bottom: .5rem;
+  font-size: .9rem; font-weight: 500;
+  letter-spacing: 0;
+  color: var(--tinta-45);
+}
+.marcos dd {
+  display: flex; align-items: baseline; justify-content: center;
+  flex-wrap: wrap; gap: .3rem;
+  margin: 0;
+}
+.marcos b {
+  font-size: clamp(2.5rem, 5.2vw, 3.9rem);
+  line-height: .9;
+  letter-spacing: -.04em;
+}
+.marcos b.texto { font-size: clamp(1.9rem, 3.6vw, 2.7rem); }
+.marcos dd span { font-size: 1.02rem; font-weight: 500; color: var(--tinta-70); }
+.marcos .quase {
+  font-family: var(--txt);
+  font-size: .96rem; font-weight: 500;
+  color: var(--tinta-45);
+}
+
+/* ==========================================================================
+   DUOS (texto + imagem)
+   ========================================================================== */
+
+.duo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2.4rem, 5vw, 4.4rem);
+  align-items: center;
+}
+@media (min-width: 981px) {
+  .duo { grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); gap: clamp(3rem, 6vw, 5.5rem); }
+  .duo-invertido > :first-child { order: 2; }
+}
+
+/* ==========================================================================
+   03 · O BAIRRO PARQUE
+   A aérea é a única imagem que explica de uma vez o que é um bairro parque,
+   e sobre ela as chamadas são desenhadas como anotação de planta: ponto,
+   linha de chamada fina, nome. É o vocabulário do urbanismo do projeto.
+
+   O arquivo original tem 1100x602 — é o maior que existe. Por isso a figura
+   é LIMITADA a esse tamanho: daí para cima o navegador ampliaria, e ampliar
+   borra. Sem corte, as chamadas em porcentagem caem exatamente no mesmo
+   ponto da cena em qualquer largura de tela.
+   ========================================================================== */
+
+/* Sem respiro embaixo: os números (230 mil m², 30, 130 mil) são o fecho desta
+   dobra, não uma seção à parte. O respiro dos dois somava 189px — uma faixa
+   branca grande o bastante para parecer falha de montagem. Ele agora mora
+   inteiro no .marcos-sec, e vale ~61px: o mesmo intervalo que separa o
+   panorama da lista logo acima, para a dobra inteira respirar no mesmo passo. */
+.bairro { padding: clamp(3.6rem, 8vw, 7rem) 0 0; }
+
+.panorama {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;               /* o tamanho nativo do arquivo */
+  margin: 0 auto clamp(2.2rem, 4.5vw, 3.4rem);
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--mata);
+}
+.panorama img { display: block; width: 100%; height: auto; }
+
+.panorama figcaption {
+  position: absolute; right: var(--gut); bottom: 14px; z-index: 3;
+  padding: .36rem .72rem;
+  border-radius: 999px;
+  background: rgba(11,35,24,.62);
+  backdrop-filter: blur(5px);
+  color: var(--sobre-70);
+  font-size: .66rem;
+}
+
+/* --- anotação de planta --- */
+.planta { position: absolute; inset: 0; z-index: 2; }
+
+.pt {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  display: flex; flex-direction: column; align-items: center;
+  /* o ponto é a origem: a caixa é centrada nele na horizontal */
+  transform: translateX(-50%);
+  /* Metade desta foto é céu claríssimo e a outra metade é mato escuro: branco
+     puro some em cima, tinta escura some embaixo. O halo resolve o ponto e a
+     linha nas duas, e a plaquinha resolve o nome. */
+  filter: drop-shadow(0 0 2px rgba(11,35,24,.8));
+}
+.pt::before {                      /* o ponto no alvo */
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--sobre);
+}
+.pt i {                            /* a linha de chamada */
+  display: block;
+  width: 1px;
+  height: clamp(24px, 4.4vw, 62px);
+  background: var(--sobre);
+  transform-origin: top;
+}
+.pt b {
+  padding: .34rem .66rem;
+  border-radius: 2px;              /* quina viva: é etiqueta de planta, não pílula */
+  background: rgba(11,35,24,.82);
+  font-size: clamp(.72rem, 1.02vw, .98rem);
+  font-weight: 500;
+  line-height: 1.25;
+  white-space: nowrap;
+  color: var(--sobre);
+}
+
+/* Nome ACIMA do ponto. Além de inverter a ordem, a caixa inteira sobe:
+   quem tem de cair na coordenada é o PONTO, e nestes ele é o último elemento,
+   não o primeiro. Sem o translateY(-100%) o alvo escorrega para baixo a
+   altura do nome mais a da linha. */
+.pt-cima { flex-direction: column-reverse; transform: translate(-50%, -100%); }
+.pt-cima i { transform-origin: bottom; }
+
+/* junto à borda da imagem o nome centrado vazaria para fora */
+.pt-fim { align-items: flex-start; transform: translateX(-3px); }
+
+/* o traço se desenha e o nome chega atrás dele, um ponto de cada vez */
+body.js .planta .pt            { opacity: 0; }
+body.js .planta .pt i          { transform: scaleY(0); }
+body.js .planta .pt b          { opacity: 0; transform: translateY(6px); }
+body.js .planta.visivel .pt    { opacity: 1; transition: opacity .35s var(--curva) var(--t); }
+body.js .planta.visivel .pt i  { transform: none;  transition: transform .5s var(--curva) var(--t); }
+body.js .planta.visivel .pt b  { opacity: 1; transform: none;
+                                 transition: opacity .5s var(--curva) calc(var(--t) + .34s),
+                                             transform .5s var(--curva) calc(var(--t) + .34s); }
+body.js .planta .pt:nth-child(1) { --t: .05s; }
+body.js .planta .pt:nth-child(2) { --t: .22s; }
+body.js .planta .pt:nth-child(3) { --t: .39s; }
+body.js .planta .pt:nth-child(4) { --t: .56s; }
+
+/* o recipiente não entra com o fade genérico — quem anima são os pontos */
+body.js .planta[data-entra]          { opacity: 1; transform: none; }
+body.js .planta[data-entra].visivel  { transition: none; }
+
+/* os três fatos viram a base da dobra, numa linha sob a imagem */
+.lista-tres { margin-top: 0; max-width: 1100px; margin-inline: auto; }
+@media (min-width: 861px) {
+  .lista-tres {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(1.6rem, 3.2vw, 2.8rem);
+    border-top: 1px solid var(--areia);
+  }
+  .lista-tres li { border-top: 0; padding-top: 1rem; align-content: start; }
+  .lista-tres li:last-child { border-bottom: 0; }
+}
+
+@media (max-width: 700px) {
+  /* a figura fica com ~180px de altura: quatro nomes viram sopa. Ficam o
+     bairro e a área verde, que são o assunto; o Atlântico e a serra são
+     contexto e já estão no texto da seção. */
+  .pt:nth-child(1), .pt:nth-child(3) { display: none; }
+  .pt b { font-size: .68rem; }
+  .pt i { height: 30px; }
+  .panorama figcaption { right: 10px; bottom: 8px; font-size: .58rem; }
+}
+
+.lista-marcada { margin: 1.6rem 0 0; padding: 0; list-style: none; }
+.lista-marcada li {
+  position: relative;
+  padding: .72rem 0 .72rem 1.85rem;
+  border-top: 1px solid var(--areia);
+  font-size: .98rem;
+  color: var(--tinta-70);
+}
+.lista-marcada li:last-child { border-bottom: 1px solid var(--areia); }
+.lista-marcada li::before {
+  content: ""; position: absolute; left: 0; top: 1.42em;
+  width: 10px; height: 1.5px;
+  background: var(--viva-fundo);
+}
+
+/* ==========================================================================
+   MOLDURAS — sem recorte: a imagem manda na altura.
+   (o parallax foi descartado de propósito; curso de parallax com
+    object-fit:cover só se consegue ampliando a foto, e ampliar corta)
+   ========================================================================== */
+
+.moldura {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--papel-2);
+}
+.moldura img { display: block; width: 100%; height: auto; }
+.moldura figcaption {
+  padding: .85rem 1.05rem;
+  font-size: .82rem;
+  letter-spacing: .02em;
+  color: var(--tinta-45);
+  background: var(--papel-2);
+}
+.estrutura .moldura figcaption { background: var(--mata-2); color: var(--sobre-40); }
+
+/* selo de perspectiva ilustrativa */
+.ilustrativa::before {
+  content: "Perspectiva ilustrativa";
+  position: absolute; left: 14px; top: 14px; z-index: 2;
+  padding: .36rem .72rem;
+  border-radius: 999px;
+  background: rgba(11,35,24,.74);
+  color: var(--sobre);
+  font-size: .685rem; font-weight: 500;
+  letter-spacing: .01em;
+}
+/* o selo já diz o que a legenda diria */
+.ilustrativa figcaption { display: none; }
+
+/* ==========================================================================
+   04 · ESPAÇOS — quatro colunas em escada, no estilo da referência.
+   Esta seção usa uma faixa mais larga que o resto do site (1800 em vez de
+   1240): é o que permite as imagens terem corpo de verdade sem passar do
+   tamanho nativo dos arquivos, que é 428px.
+   ========================================================================== */
+
+.faixa-larga {
+  width: 100%;
+  max-width: 1800px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 56px);
+}
+
+.espacos { padding: clamp(3.6rem, 8vw, 7rem) 0; background: var(--papel-2); }
+
+.grade-espacos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2.4rem, 4.4vw, 3.4rem);
+  margin-top: clamp(2.2rem, 4.5vw, 3.4rem);
+}
+
+.espaco h3 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.3rem, 1.55vw, 1.78rem);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: -.006em;
+  color: var(--viva-fundo);
+}
+
+/* as quatro na mesma proporção, senão a fileira fica desencontrada. Três são
+   428x360 exatos — corte zero. A da Rua Viva é 16:9 e perde um pouco de topo
+   e base, que nela não tira nada da cena. */
+.quadro {
+  position: relative;
+  margin: 0 0 1.25rem;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--areia);
+  aspect-ratio: 428 / 360;
+}
+.quadro img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+.espaco p { margin: 0; font-size: 1rem; color: var(--tinta-70); }
+
+@media (min-width: 900px) {
+  .grade-espacos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(1.4rem, 2vw, 2.4rem);
+  }
+  /* o degrau. É decoração: some antes de 900px e zera no movimento reduzido */
+  .grade-espacos .espaco:nth-child(2) { margin-top: clamp(1.8rem, 3.2vw, 3.4rem); }
+  .grade-espacos .espaco:nth-child(3) { margin-top: clamp(3.6rem, 6.4vw, 6.8rem); }
+  .grade-espacos .espaco:nth-child(4) { margin-top: clamp(5.4rem, 9.6vw, 10.2rem); }
+}
+
+.lista-espacos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  margin: clamp(2.8rem, 5.5vw, 4.2rem) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--areia);
+}
+.lista-espacos li {
+  padding: 1.15rem 1.3rem 1.15rem 0;
+  border-bottom: 1px solid var(--areia);
+}
+.lista-espacos b { display: block; font-size: .99rem; font-weight: 600; }
+.lista-espacos span { font-size: .865rem; color: var(--tinta-45); }
+/* ==========================================================================
+   05 · OPERAÇÕES
+   ========================================================================== */
+
+.operacoes { padding: clamp(3.6rem, 8vw, 7rem) 0; }
+
+/* Colunas explícitas em vez de `auto-fit`: com encaixe automático o celular
+   caía em UMA coluna, e as oito fotos viravam oito telas de rolagem. */
+.grade-op {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(.8rem, 2.2vw, 1.7rem);
+}
+@media (min-width: 700px)  { .grade-op { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .grade-op { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.op { margin: 0; }
+.op-foto {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--papel-2);
+  aspect-ratio: 760 / 425;   /* exatamente a proporção dos arquivos: zero corte */
+}
+.op-foto img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .75s var(--curva);
+}
+.op:hover .op-foto img { transform: scale(1.055); }
+
+.op figcaption { padding: .95rem .15rem 0; }
+.op figcaption b { display: block; font-size: 1.075rem; }
+.op figcaption span {
+  display: block; margin-top: .12rem;
+  font-size: .845rem; color: var(--tinta-45);
+}
+
+/* ==========================================================================
+   06 · ESTRUTURA — quatro operações com foto, na faixa escura, e a Clínica
+   Singular numa faixa própria: ela não tem foto e, como linha de lista, era
+   o ponto que mais sumia — aqui ela ganha a largura inteira.
+   ========================================================================== */
+
+.estrutura {
+  padding: clamp(4rem, 9vw, 7.5rem) 0;
+  background: var(--mata);
+  color: var(--sobre);
+}
+.estrutura .cabeca { margin-bottom: clamp(2.4rem, 4.5vw, 3.6rem); }
+
+.grade-operacoes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 3.6vw, 2.6rem);
+}
+@media (min-width: 900px) {
+  .grade-operacoes { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1.2rem, 2vw, 2rem); }
+}
+
+.op-card { margin: 0; }
+/* 16/9 é a proporção exata dos arquivos: corte zero */
+.op-quadro {
+  position: relative;
+  margin: 0 0 1.15rem;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--mata-2);
+  aspect-ratio: 16 / 9;
+}
+.op-quadro img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .8s var(--curva);
+}
+.op-card:hover .op-quadro img { transform: scale(1.05); }
+
+.op-card h3 {
+  margin: 0 0 .35rem;
+  font-size: clamp(1.08rem, 1.25vw, 1.26rem);
+  font-weight: 600;
+  letter-spacing: -.004em;
+  color: var(--sobre);
+}
+.op-card p {
+  margin: 0;
+  font-size: .92rem;
+  line-height: 1.55;
+  color: var(--sobre-70);
+}
+
+/* a faixa da clínica */
+.destaque-clinica {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .5rem clamp(2rem, 4vw, 3.4rem);
+  align-items: baseline;
+  margin-top: clamp(2.4rem, 4.5vw, 3.6rem);
+  padding-top: clamp(1.6rem, 3vw, 2.4rem);
+  border-top: 1px solid var(--sobre-14);
+}
+@media (min-width: 760px) {
+  .destaque-clinica { grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr); }
+}
+.destaque-clinica h3 {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+  font-weight: 300;
+  line-height: 1.12;
+  color: var(--viva);
+}
+.destaque-clinica p {
+  margin: 0;
+  max-width: 56ch;
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  color: var(--sobre-70);
+}
+/* ==========================================================================
+   07 · REGIÃO
+   ========================================================================== */
+
+.regiao { padding: clamp(3.6rem, 8vw, 7rem) 0; }
+
+.regiao-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 4.5vw, 3.6rem);
+  align-items: center;
+}
+@media (min-width: 861px) {
+  .regiao-grade { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+}
+
+/* A lista de distâncias é o conteúdo mais bem estruturado da página e estava
+   impressa em corpo de legenda. Aqui os números mandam: alinhados à direita
+   numa coluna só, eles formam uma escada de grandeza que se lê antes de
+   qualquer palavra. */
+.distancias { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--areia); }
+.distancias li {
+  display: flex; align-items: baseline; gap: .5rem;
+  padding: .7rem 0;
+  border-bottom: 1px solid var(--areia);
+}
+.distancias b {
+  min-width: 2.8ch;
+  font-size: clamp(2.3rem, 5.2vw, 3.9rem);
+  font-weight: 300;
+  letter-spacing: -.03em;
+  line-height: 1;
+  text-align: right;
+}
+.distancias u {
+  text-decoration: none;
+  font-size: .87rem; font-weight: 600;
+  color: var(--tinta-45);
+}
+.distancias span {
+  margin-left: auto; text-align: right;
+  font-size: .95rem; color: var(--tinta-70);
+}
+
+/* O arquivo do mapa também tem 1100px de largura, e a faixa chega a 1240:
+   sem este teto o navegador o esticava 1,15x e ele ficava mole. A margem vai
+   num atalho só de propósito — `margin: x 0 0` seguido de `margin-inline:auto`
+   zeraria a centralização, que é um erro que já aconteceu duas vezes aqui. */
+.mapa { max-width: 1100px; margin: clamp(2.4rem, 5vw, 3.6rem) auto 0; }
+.mapa img { display: block; width: 100%; height: auto; border-radius: 18px; }
+.mapa figcaption { margin-top: .85rem; font-size: .82rem; color: var(--tinta-45); }
+
+/* ==========================================================================
+   08 · PLANEJE A VISITA
+   ========================================================================== */
+
+.visita { padding: clamp(3.6rem, 8vw, 7rem) 0; background: var(--papel-2); }
+
+.grade-visita {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.6rem);
+}
+.cartao {
+  display: flex; flex-direction: column;
+  padding: clamp(1.5rem, 2.6vw, 2rem);
+  background: var(--papel);
+  border: 1px solid var(--areia);
+  border-radius: 18px;
+  transition: transform .4s var(--curva), box-shadow .4s;
+}
+.cartao:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px -22px rgba(20,33,26,.3);
+}
+.cartao h3 {
+  margin: 0 0 .75rem;
+  font-family: var(--txt);
+  font-size: .9rem; font-weight: 500;
+  letter-spacing: 0;
+  color: var(--tinta-45);
+}
+.cartao-forte {
+  margin: 0 0 .7rem;
+  font-size: clamp(1.26rem, 2vw, 1.5rem);
+  color: var(--viva-fundo);
+}
+.cartao p:not(.cartao-forte) { margin: 0; font-size: .94rem; color: var(--tinta-70); }
+.cartao .elo { margin-top: auto; padding-top: 1rem; }
+
+/* ==========================================================================
+   09 · EVENTOS
+   ========================================================================== */
+
+.eventos { padding: clamp(3.6rem, 8vw, 7rem) 0; }
+@media (min-width: 981px) {
+  .eventos .duo { grid-template-columns: minmax(0, .78fr) minmax(0, 1fr); }
+}
+
+/* ==========================================================================
+   11 · CONTATO
+   ========================================================================== */
+
+.contato {
+  padding: clamp(4.4rem, 10vw, 8rem) 0;
+  background: var(--mata);
+  color: var(--sobre);
+  text-align: center;
+}
+.contato-in { max-width: 740px; }
+.contato .lead { margin-inline: auto; }
+.contato-acoes {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: .85rem;
+  margin-top: 1.9rem;
+}
+
+/* ==========================================================================
+   RODAPÉ
+   ========================================================================== */
+
+/* posicionado de propósito: a capa é `fixed` com z-index 0, e um elemento
+   fixo pinta por cima do fundo de qualquer irmão não posicionado — sem isto
+   a capa vazava por trás do rodapé */
+.rodape {
+  position: relative; z-index: 1;
+  background: var(--tinta); color: var(--sobre-70);
+}
+
+.rodape-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 3rem);
+  padding-block: clamp(2.8rem, 6vw, 4.4rem);
+}
+@media (min-width: 801px) {
+  .rodape-grade { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); }
+}
+
+.rodape-marca img { width: 152px; height: auto; display: block; margin-bottom: 1.2rem; }
+.rodape-marca p { margin: 0 0 .7rem; font-size: .92rem; }
+.rodape-vokkan { color: var(--sobre-40); font-size: .87rem; }
+.rodape-vokkan a { color: var(--viva); text-decoration: none; }
+.rodape-vokkan a:hover { text-decoration: underline; }
+
+.rodape-col { display: flex; flex-direction: column; align-items: flex-start; }
+.rodape-col h3 {
+  margin: 0 0 1rem;
+  font-family: var(--txt);
+  font-size: .745rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--sobre-40);
+}
+.rodape-col a {
+  display: flex; align-items: center;
+  min-height: 46px;
+  font-size: .92rem;
+  text-decoration: none;
+  color: var(--sobre-70);
+  transition: color .22s;
+}
+.rodape-col a:hover { color: var(--sobre); }
+
+.rodape-pe {
+  padding-block: 1.6rem 2.2rem;
+  border-top: 1px solid rgba(242,240,230,.11);
+}
+.rodape-pe p { margin: 0; font-size: .775rem; line-height: 1.6; color: var(--sobre-40); max-width: 86ch; }
+
+/* ==========================================================================
+   WHATSAPP FLUTUANTE
+   ========================================================================== */
+
+.whats-flutuante {
+  position: fixed; right: clamp(16px, 3vw, 28px); bottom: clamp(16px, 3vw, 28px);
+  z-index: 115;
+  display: flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: #25D366; color: #06240F;
+  box-shadow: 0 10px 26px -10px rgba(0,0,0,.42);
+  opacity: 0; visibility: hidden; transform: translateY(14px) scale(.9);
+  transition: opacity .35s var(--curva), transform .35s var(--curva), visibility .35s;
+}
+.whats-flutuante.visivel { opacity: 1; visibility: visible; transform: none; }
+.whats-flutuante.visivel:hover { transform: scale(1.07); }
+
+/* ==========================================================================
+   MOVIMENTO
+   Tudo que começa escondido depende da classe `js` no body. Se o observador
+   não disparar, o script tira essa classe e a página aparece inteira — sem
+   isso uma falha no observador deixaria o site EM BRANCO, que é pior do que
+   não ter animação nenhuma.
+   ========================================================================== */
+
+/* entradas simples */
+body.js [data-entra] { opacity: 0; transform: translateY(22px); }
+body.js [data-entra].visivel {
+  opacity: 1; transform: none;
+  transition: opacity .85s var(--curva) var(--atraso, 0ms),
+              transform .85s var(--curva) var(--atraso, 0ms);
+}
+
+/* títulos: cortina de cima para baixo */
+body.js [data-revela] {
+  clip-path: inset(0 -12% 104% -6%);
+  transform: translateY(.1em);
+}
+body.js [data-revela].visivel {
+  clip-path: inset(-18% -12% -22% -6%);
+  transform: none;
+  transition: clip-path 1.15s var(--curva), transform 1.15s var(--curva);
+}
+
+/* a foto da abertura assenta junto — termina em escala 1, então não corta nada
+   além do que o object-fit já corta em repouso */
+/* A foto NÃO começa invisível. Ela é o maior elemento da primeira tela e já
+   chega decodificada; escondê-la para animar deixava a abertura num verde
+   chapado por quase dois segundos no recarregamento. Agora ela aparece
+   assim que pinta, e só assenta a escala. */
+body.js .hero-foto img { transform: scale(1.05); }
+body.js .hero.pronta .hero-foto img {
+  transform: none;
+  transition: transform 1.5s var(--curva);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within { scroll-behavior: auto; }
+  .grade-espacos .espaco { margin-top: 0 !important; }  /* o degrau é decoração */
+  body.js [data-entra],
+  body.js [data-revela],
+  body.js .hero-foto img,
+  body.js .planta .pt,
+  body.js .planta .pt i,
+  body.js .planta .pt b {
+    opacity: 1 !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  /* o transform destes três posiciona, não anima: zerar tiraria a chamada do
+     lugar. Só os que de fato só servem para animar é que voltam ao normal. */
+  /* a camada da frente TEM de parar junto com o fundo: são a mesma foto, e
+     se uma animar a escala sem a outra, as duas desencontram na tela */
+  body.js [data-entra],
+  body.js [data-revela],
+  body.js .hero-foto img,
+  body.js .hero-frente,
+  body.js .planta .pt b { transform: none !important; }
+  body.js .hero-frente { transition: none !important; }
+  body.js .planta .pt i { transform: scaleY(1) !important; }
+  .btn, .cartao, .op-foto img, .op-quadro img, .elo::after { transition: none !important; }
+}
+
+/* ==========================================================================
+   CELULAR
+   ========================================================================== */
+
+@media (max-width: 980px) {
+  .topo-nav {
+    position: fixed; inset: 0 0 auto;
+    flex-direction: column;
+    margin: 0;
+    padding: 94px var(--gut) 2.4rem;
+    background: var(--mata);
+    border-bottom: 1px solid var(--sobre-14);
+    opacity: 0; visibility: hidden;
+    transform: translateY(-14px);
+    transition: opacity .32s var(--curva), transform .32s var(--curva), visibility .32s;
+  }
+  .topo.aberto .topo-nav { opacity: 1; visibility: visible; transform: none; }
+  /* o painel é irmão posterior da marca e do botão, então sem isto ele
+     pintaria por cima dos dois e o menu aberto ficaria sem o logo */
+  .topo-marca, .menu-botao { position: relative; z-index: 2; }
+  .topo.fixo .topo-nav a { color: var(--sobre-70); }
+  .topo.fixo .topo-nav a:hover { color: var(--sobre); }
+  .topo-nav a { min-height: 52px; display: flex; align-items: center; font-size: 1.1rem; }
+  .topo-cta { display: none; }
+  .menu-botao { display: block; }
+  .topo.aberto .menu-botao span { background: var(--sobre); }
+
+  .distancias li { flex-wrap: wrap; }
+  .distancias span { margin-left: 0; flex: 1 1 100%; text-align: left; }
+}
+
+@media (max-width: 620px) {
+  /* Os marcos em duas colunas deixavam "Lojas, restaurantes e serviços"
+     quebrando em três linhas e a fileira ficava esfarrapada. Em uma coluna
+     cada rótulo cabe numa linha só. */
+  .marcos {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .marcos > div {
+    padding: 1.15rem 0;
+    border-top: 1px solid var(--areia);
+  }
+  .marcos dt { margin-bottom: .35rem; }
+  .marcos b { font-size: clamp(2.2rem, 11vw, 3rem); }
+
+  .lista-espacos li { padding-right: 0; }
+  .estrutura-itens > div { padding-right: 0; }
+
+  /* as fotos das operações ficam de dois em dois: a legenda acompanha */
+  .op figcaption { padding-top: .7rem; }
+  .op figcaption b { font-size: .95rem; line-height: 1.25; }
+  .op figcaption span { font-size: .78rem; }
+
+  .distancias li { padding: .85rem 0; }
+  .distancias span { margin-top: .1rem; }
+}

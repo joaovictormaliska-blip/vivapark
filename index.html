@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Vivapark Porto Belo | O primeiro bairro parque do Brasil</title>
+<meta name="description" content="Na Costa Esmeralda, entre Itapema e Bombinhas: mais de 230 mil m² de áreas verdes, praças, lojas e restaurantes. Aberto ao público, com acesso gratuito.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Vivapark Porto Belo">
+<meta property="og:title" content="Vivapark Porto Belo | O primeiro bairro parque do Brasil">
+<meta property="og:description" content="Mais de 230 mil m² de áreas verdes em Porto Belo, SC. Aberto ao público, com acesso gratuito.">
+<meta property="og:image" content="images/hero-ceu-1280.webp">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- As duas fontes que a primeira tela usa saem na frente: sem isto o
+     navegador só descobre que precisa delas depois de ler o CSS inteiro. -->
+<link rel="preload" href="fonts/michroma-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/livvic-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css?v=79">
+</head>
+<body>
+
+<a href="#conteudo" class="pular">Pular para o conteúdo</a>
+<span class="regua" id="regua" aria-hidden="true"></span>
+
+<header class="topo" id="topo">
+  <div class="faixa topo-linha">
+    <a href="#inicio" class="topo-marca" aria-label="Vivapark Porto Belo, ir para o início">
+      <img class="marca-clara" src="images/logo.svg" width="150" height="40" alt="Vivapark Porto Belo">
+      <img class="marca-escura" src="images/logo-dark.svg" width="150" height="40" alt="" aria-hidden="true">
+    </a>
+
+    <nav class="topo-nav" id="menu" aria-label="Navegação principal">
+      <a href="#bairro">O bairro parque</a>
+      <a href="#espacos">Espaços</a>
+      <a href="#operacoes">Lojas e sabores</a>
+      <a href="#visita">Planeje a visita</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <a class="btn btn-principal topo-cta" href="#visita" data-cta="topo">Planejar visita</a>
+
+    <button class="menu-botao" id="menuBotao" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="conteudo">
+  <!-- ====================== 01 · ABERTURA ====================== -->
+  <!-- O palco é só altura de rolagem: é ele que dá curso ao zoom. A abertura
+       fica grudada no topo enquanto o palco passa. Em movimento reduzido o
+       palco encolhe para uma tela e o zoom não acontece. -->
+  <div class="hero-palco" id="heroPalco">
+  <section class="hero" id="inicio">
+
+    <!-- Tudo o que faz parte da CENA vai aqui dentro, porque é este bloco que
+         o zoom amplia: a foto, o título e a cópia mascarada. A marca e o selo
+         ficam de fora — são interface, não cena, e não devem ampliar. -->
+    <p class="faixa hero-local" data-entra>
+      <svg viewBox="0 0 16 18" width="15" height="17" fill="none" aria-hidden="true">
+        <path d="M8 .75c1.845 0 3.616.739 4.922 2.055 2.722 2.741 2.722 7.189 0 9.93l-4.169 4.2a1.07 1.07 0 0 1-1.506 0l-4.17-4.2A7.02 7.02 0 0 1 1.036 7.77 7.02 7.02 0 0 1 3.078 2.805 6.93 6.93 0 0 1 8 .75Z"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Porto Belo, Santa Catarina
+    </p>
+
+    <!-- ================= CORTINA DE ABERTURA =================
+         Tela limpa com a marca, que encolhe para cima descobrindo a dobra por
+         baixo. Em vez de animar a altura (que obriga o navegador a refazer o
+         layout a cada quadro) recorta-se a borda de baixo e desloca-se a
+         marca: as duas coisas rodam na GPU. -->
+    <div class="hero-cortina" id="heroCortina" aria-hidden="true">
+      <div class="hero-cortina-in" id="heroCortinaIn">
+        <span class="hero-cortina-risco"></span>
+        <!-- O logotipo vem embutido, e não como <img>, por um motivo: assim
+             cada traço é um elemento, e as letras podem se escrever uma a uma
+             como no Evolution. Com arquivo externo só daria para aparecer de
+             uma vez. As classes do arquivo foram prefixadas (vp-) para não
+             colidirem com as da página. -->
+        <div class="hero-cortina-marca" data-intro>
+          <svg aria-hidden="true" focusable="false" id="Camada_2" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 395.4 103.74"> <defs> <style> .vp-l { fill: #4c5659; } .vp-f { fill: #47b761; } </style> </defs> <g id="Camada_1-2" data-name="Camada 1"> <g> <path class="hero-letra vp-f"  d="m386.94,6.28s2.78,16.71-12.91,25.7c-15.7,8.1-14.62,9.82-14.62,9.82,0,0-3.23-18.17,13.86-26.27,9.05-4.29,13.67-9.24,13.67-9.24Z"/> <path class="hero-letra vp-l"  d="m0,20.49h12.3l14.54,28.59,14.54-28.59h12.2l-26.84,49.57L0,20.49Z"/> <g class="hero-letra"><path class="vp-l" d="m59.8,20.54l10.73-.08.38,48.79-10.73.08-.38-48.79Z"/><circle class="vp-f" cx="65.35" cy="8.23" r="6.71"/></g> <path class="hero-letra vp-l"  d="m78.32,20.49h12.3l14.54,28.59,14.54-28.59h12.2l-26.84,49.57-26.74-49.57Z"/> <path class="hero-letra vp-l"  d="m172.76,65.19c-3.61,3.22-8.49,4.88-13.76,4.88-14.34,0-24.4-11.32-24.4-25.18s10.05-25.18,24.4-25.18c5.27,0,10.15,1.76,13.76,4.98v-4.2h10.73v48.79h-10.73v-4.1Zm0-11.51v-17.47c-2.54-3.9-6.93-6.54-12.69-6.54-8.68,0-14.54,6.73-14.54,15.22s5.85,15.22,14.54,15.22c5.76,0,10.15-2.63,12.69-6.44Z"/> <path class="hero-letra vp-l"  d="m205.42,20.49v4.1c3.61-3.22,8.49-4.88,13.76-4.88,14.44,0,24.4,11.32,24.4,25.18s-9.95,25.18-24.4,25.18c-5.27,0-10.15-1.76-13.76-4.98v22.15h-10.73V20.49h10.73Zm27.23,24.4c0-8.49-5.86-15.22-14.44-15.22-5.76,0-10.34,2.63-12.78,6.44v17.47c2.44,3.9,7.03,6.54,12.78,6.54,8.59,0,14.44-6.73,14.44-15.22Z"/> <path class="hero-letra vp-l"  d="m287.79,65.19c-3.61,3.22-8.49,4.88-13.76,4.88-14.34,0-24.4-11.32-24.4-25.18s10.05-25.18,24.4-25.18c5.27,0,10.15,1.76,13.76,4.98v-4.2h10.73v48.79h-10.73v-4.1Zm0-11.51v-17.47c-2.54-3.9-6.93-6.54-12.69-6.54-8.68,0-14.54,6.73-14.54,15.22s5.86,15.22,14.54,15.22c5.76,0,10.15-2.63,12.69-6.44Z"/> <path class="hero-letra vp-l"  d="m309.72,20.49h10.73v5.17c3.12-3.81,7.42-5.76,12.59-5.76,1.37,0,2.83.1,4.1.49v11.12c-1.66-.68-3.61-.98-5.66-.98-4.49,0-8.78,2.05-11.03,6.05v32.69h-10.73V20.49Z"/> <path class="hero-letra vp-l"  d="m356.47,44.89v24.4h-10.73V0h10.73v44.03"/> <polygon class="hero-letra vp-l"  points="373.34 44.89 360.27 44.89 381.84 69.28 395.4 69.28 373.34 44.89"/> <g class="hero-letra" data-fim> <path class="vp-l" d="m272.42,85.36h5.83c4.06,0,6.72,1.8,6.72,5.6v.1c0,3.83-2.76,5.53-6.64,5.53h-2.54v6.9h-3.37v-18.13Zm5.83,8.8c2.23,0,3.42-1.09,3.42-3.09v-.1c0-2.16-1.27-2.99-3.42-2.99h-2.46v6.19h2.46Z"/> <path class="vp-l" d="m286.34,96.99v-.2c0-4.11,2.92-6.85,6.82-6.85s6.79,2.71,6.79,6.77v.2c0,4.13-2.92,6.82-6.82,6.82s-6.79-2.71-6.79-6.74Zm10.47-.05v-.18c0-2.74-1.37-4.41-3.65-4.41s-3.68,1.65-3.68,4.39v.2c0,2.71,1.34,4.41,3.68,4.41s3.65-1.7,3.65-4.41Z"/> <path class="vp-l" d="m302.72,90.22h3.07v2.48c.84-1.67,2.08-2.66,4.31-2.69v2.87c-2.69.02-4.31.89-4.31,3.7v6.9h-3.07v-13.26Z"/> <path class="vp-l" d="m313.42,99.78v-7.25h-1.77v-2.31h1.77v-2.92h3.07v2.92h2.92v2.31h-2.92v6.97c0,1.17.56,1.7,1.52,1.7.61,0,1.06-.08,1.5-.25v2.43c-.48.18-1.14.33-2.08.33-2.64,0-4.01-1.42-4.01-3.93Z"/> <path class="vp-l" d="m321.39,96.99v-.2c0-4.11,2.92-6.85,6.82-6.85s6.79,2.71,6.79,6.77v.2c0,4.13-2.92,6.82-6.82,6.82s-6.79-2.71-6.79-6.74Zm10.47-.05v-.18c0-2.74-1.37-4.41-3.65-4.41s-3.68,1.65-3.68,4.39v.2c0,2.71,1.34,4.41,3.68,4.41s3.65-1.7,3.65-4.41Z"/> <path class="vp-l" d="m344.06,85.36h6.49c3.73,0,5.93,1.42,5.93,4.72v.1c0,1.8-.81,3.22-2.87,3.85,2.46.53,3.63,1.88,3.63,4.28v.1c0,3.37-2.23,5.07-6.21,5.07h-6.97v-18.13Zm6.08,7.63c2.23,0,3.09-.81,3.09-2.66v-.1c0-1.72-.99-2.46-3.14-2.46h-2.74v5.22h2.79Zm.48,8.09c2.26,0,3.3-1.01,3.3-2.89v-.1c0-1.88-1.04-2.81-3.52-2.81h-3.04v5.81h3.27Z"/> <path class="vp-l" d="m359.27,96.99v-.2c0-4.11,2.81-6.85,6.59-6.85,3.3,0,6.26,1.95,6.26,6.69v.89h-9.71c.1,2.51,1.37,3.93,3.65,3.93,1.85,0,2.81-.73,3.04-2.03h2.97c-.43,2.79-2.69,4.31-6.09,4.31-3.9,0-6.72-2.56-6.72-6.74Zm9.81-1.52c-.15-2.28-1.32-3.3-3.22-3.3s-3.09,1.24-3.4,3.3h6.62Z"/> <path class="vp-l" d="m374.94,84.09h3.07v19.4h-3.07v-19.4Z"/> <path class="vp-l" d="m380.85,96.99v-.2c0-4.11,2.92-6.85,6.82-6.85s6.79,2.71,6.79,6.77v.2c0,4.13-2.92,6.82-6.82,6.82s-6.79-2.71-6.79-6.74Zm10.47-.05v-.18c0-2.74-1.37-4.41-3.65-4.41s-3.68,1.65-3.68,4.39v.2c0,2.71,1.34,4.41,3.68,4.41s3.65-1.7,3.65-4.41Z"/> </g> </g> </g> </svg>
+        </div>
+        <p class="hero-cortina-sub">Santa Catarina</p>
+      </div>
+      <span class="hero-cortina-seta" id="heroCortinaSeta"></span>
+    </div>
+    <div class="hero-zoom" id="heroZoom">
+      <figure class="hero-foto">
+        <!-- No desktop o arquivo é fixado em 1920 por media query, e não
+             escolhido por srcset. Motivo: a camada que passa na frente do
+             título é a MESMA imagem, e as duas têm de sair do mesmo arquivo. -->
+        <picture>
+          <source media="(min-width: 981px)" srcset="images/hero-ceu-1920.webp">
+          <img src="images/hero-ceu-1280.webp"
+               srcset="images/hero-ceu-860.webp 860w, images/hero-ceu-1280.webp 1280w"
+               sizes="100vw"
+               width="1920" height="1290" fetchpriority="high"
+               alt="Perspectiva do parque do Vivapark Porto Belo ao entardecer: ponte de madeira sobre o lago, edifícios com terraços arborizados ao fundo e o parque em volta">
+        </picture>
+      </figure>
+
+      <h1 class="faixa titulo-hero">
+        <span data-revela>O primeiro</span>
+        <span data-revela data-atraso="110">bairro</span>
+        <span data-revela data-atraso="220">parque</span>
+        <span data-revela data-atraso="330">do Brasil</span>
+      </h1>
+
+      <!-- A MESMA foto, desenhada de novo por cima do título, com uma máscara
+           CSS que deixa visível tudo o que está abaixo da linha do horizonte.
+           É isso que põe o título atrás dos prédios.
+
+           Tem de ser o mesmo arquivo e o mesmo tipo de elemento (`img` com
+           object-fit, não fundo de CSS): assim o navegador usa o mesmo bitmap
+           decodificado e o mesmo caminho de redimensionamento, e as duas
+           camadas ficam idênticas pixel a pixel. Com caminhos diferentes, a
+           área sobreposta aparecia como um bloco de luz.
+
+           No celular a `source` não casa e carrega só o GIF transparente de
+           43 bytes; no desktop a foto já veio do cache do fundo. -->
+      <picture class="hero-frente-caixa">
+        <source media="(min-width: 981px)" srcset="images/hero-ceu-1920.webp">
+        <img class="hero-frente" aria-hidden="true" width="1920" height="1290" alt=""
+             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+      </picture>
+
+      <!-- A luz da janela: um ponto minúsculo ancorado nela que a ampliação
+           transforma em estouro na tela inteira. Fica DENTRO da cena de
+           propósito — é ela que amplia junto, e é isso que faz o voo parecer
+           voo, e não zoom de foto solta. -->
+      <span class="hero-brilho" id="heroBrilho" aria-hidden="true"></span>
+    </div>
+
+    <!-- O estouro que faz a troca. Camada própria, que NÃO amplia: sobe
+         sozinha, segura a tela clara por um instante e só então se abre na
+         dobra seguinte. Se luz e troca se sobrepusessem, o clarão se diluiria
+         e a passagem viraria um cruzamento banal de duas imagens. -->
+    <span class="hero-flash" id="heroFlash" aria-hidden="true"></span>
+
+    <p class="hero-selo-img">Perspectiva ilustrativa</p>
+
+    <a class="hero-marca" href="#inicio" aria-label="Vivapark Porto Belo, ir para o início">
+      <img src="images/logo.svg" width="152" height="40" alt="Vivapark Porto Belo">
+    </a>
+
+  </section>
+  </div>
+
+  <!-- ====================== 03 · O BAIRRO PARQUE ====================== -->
+  <!-- O palco existe só para a trava: a dobra gruda no topo e a rolagem
+       corre no vazio por 70svh antes de soltar. Ver style.css. -->
+  <div class="bairro-palco">
+  <section class="bairro" id="bairro">
+    <div class="faixa">
+      <div class="cabeca">
+        <h2 class="titulo">Melhor do que viver perto<br>de um parque <em>é morar dentro dele.</em></h2>
+        <p class="lead">
+          O projeto foi idealizado pelo arquiteto Jaime Lerner junto com a Vokkan, a partir do conceito
+          de <em>walkability</em>: tudo a poucos minutos de caminhada. Moradia, trabalho, educação,
+          lazer e cultura dividem o mesmo bairro — e o parque é o que costura tudo isso.
+        </p>
+      </div>
+
+      <!-- O arquivo tem 1100x602 e é o maior que existe. A figura é limitada a
+           esse tamanho de propósito: esticar passa a ampliar, e ampliar borra.
+           Como não há corte, as chamadas em porcentagem caem exatamente no
+           mesmo ponto da cena em qualquer largura. -->
+      <figure class="panorama">
+        <img src="images/aerea-geral-1100.webp"
+             srcset="images/aerea-geral-760.webp 760w, images/aerea-geral-1100.webp 1100w"
+             sizes="(max-width: 1180px) 92vw, 1100px"
+             width="1100" height="602" loading="lazy" decoding="async"
+             alt="Perspectiva aérea do Vivapark Porto Belo: o bairro inteiro entre áreas verdes, com o oceano e a orla à esquerda e as montanhas da Costa Esmeralda ao fundo">
+
+        <div class="planta" data-entra>
+          <span class="pt pt-baixo pt-fim" style="--x:6%;  --y:29%"><i></i><b>O Atlântico</b></span>
+          <span class="pt pt-cima"         style="--x:44%; --y:46%"><i></i><b>O bairro</b></span>
+          <span class="pt pt-baixo"        style="--x:84%; --y:25%"><i></i><b>A serra</b></span>
+          <span class="pt pt-cima"         style="--x:55%; --y:81%"><i></i><b>230 mil m² de áreas verdes</b></span>
+        </div>
+
+        <figcaption>Perspectiva ilustrativa do projeto</figcaption>
+      </figure>
+
+      <ul class="lista-marcada lista-tres">
+        <li>Projeto assinado por Jaime Lerner e Vokkan</li>
+        <li>Certificação LEED for Communities, nível platinum na categoria Plan&nbsp;&amp;&nbsp;Design</li>
+        <li>Moradia, comércio, escola, esporte e lazer no mesmo bairro</li>
+      </ul>
+    </div>
+  </section>
+  </div>
+
+  <!-- ====================== 02 · MARCOS ====================== -->
+  <section class="marcos-sec">
+    <dl class="faixa marcos">
+      <div>
+        <dt>Áreas verdes</dt>
+        <dd><b data-conta="230">230</b> <span>mil m²</span></dd>
+      </div>
+      <div>
+        <dt>Lojas, restaurantes e serviços</dt>
+        <dd><span class="quase">quase</span> <b data-conta="30">30</b></dd>
+      </div>
+      <div>
+        <dt>Pessoas por mês</dt>
+        <dd><b data-conta="130">130</b> <span>mil</span></dd>
+      </div>
+      <div>
+        <dt>Entrada</dt>
+        <dd><b class="texto">Gratuita</b></dd>
+      </div>
+    </dl>
+    <p class="faixa fonte-dado">Dados divulgados pelo empreendimento em agosto de 2026.</p>
+  </section>
+
+    <!-- ====================== 04 · ESPAÇOS ====================== -->
+  <section class="espacos" id="espacos">
+    <div class="faixa-larga">
+      <div class="cabeca">
+        <h2 class="titulo">O parque é a rua,<br><em>e a rua é de todos.</em></h2>
+        <p class="lead">
+          Estes são os espaços que o bairro mantém abertos ao público. A programação varia ao longo
+          do ano, e o acesso às áreas livres não é cobrado.
+        </p>
+      </div>
+
+      <div class="grade-espacos">
+        <article class="espaco">
+          <h3>Rua<br>Viva</h3>
+          <figure class="quadro">
+            <img src="images/ruaviva-dia-1520.webp"
+                 srcset="images/ruaviva-dia-900.webp 900w, images/ruaviva-dia-1520.webp 1520w"
+                 sizes="(max-width: 899px) 92vw, 24vw"
+                 width="1520" height="850" loading="lazy" decoding="async"
+                 alt="Fachadas de lojas na Rua Viva durante o dia, com pessoas circulando">
+          </figure>
+          <p>A rua de comércio e convívio do bairro. É onde ficam as lojas, os restaurantes e boa
+             parte da programação de eventos.</p>
+        </article>
+
+        <article class="espaco">
+          <h3>Parque<br>Viva Energia</h3>
+          <figure class="quadro ilustrativa">
+            <img src="images/lago-fonte-1280.webp"
+                 srcset="images/lago-fonte-640.webp 640w, images/lago-fonte-1280.webp 1280w"
+                 sizes="(max-width: 899px) 92vw, 24vw"
+                 width="1280" height="700" loading="lazy" decoding="async"
+                 alt="Perspectiva do parque com lago, fonte d'água, ipê florido e pessoas caminhando">
+          </figure>
+          <p>A maior área livre do bairro, usada para piqueniques, feiras e atividades ao ar livre.</p>
+        </article>
+
+        <article class="espaco">
+          <h3>Espaço<br>Gastronomia</h3>
+          <figure class="quadro ilustrativa">
+            <img src="images/convivio-428.webp" width="428" height="360" loading="lazy" decoding="async"
+                 alt="Perspectiva de famílias em piquenique em um deck de madeira cercado por vegetação">
+          </figure>
+          <p>Mesas ao ar livre ligadas às operações de alimentação, no deck à beira do lago.</p>
+        </article>
+
+        <article class="espaco">
+          <h3>Caminhar<br>e pedalar</h3>
+          <figure class="quadro ilustrativa">
+            <img src="images/pista-428.webp" width="428" height="360" loading="lazy" decoding="async"
+                 alt="Perspectiva da pista de caminhada entre o lago e a área de playground">
+          </figure>
+          <p>Percurso de caminhada e ciclovia dentro do bairro, ligando as praças, os lagos e as
+             áreas de esporte.</p>
+        </article>
+      </div>
+
+      <ul class="lista-espacos">
+        <li><b>Playground Mico-Leão-Dourado</b><span>Área infantil</span></li>
+        <li><b>Play Acqua</b><span>Área infantil com água</span></li>
+        <li><b>Quadras esportivas</b><span>Ao ar livre e cobertas</span></li>
+        <li><b>Lagos</b><span>Com vista para as montanhas</span></li>
+      </ul>    </div>
+  </section>
+<!-- ====================== 05 · OPERAÇÕES ====================== -->
+  <section class="operacoes" id="operacoes">
+    <div class="faixa">
+      <div class="cabeca cabeca-centro">
+        <h2 class="titulo">Quase 30 operações,<br><em>a pé de qualquer lugar.</em></h2>
+      </div>
+
+      <div class="grade-op">
+        <figure class="op">
+          <div class="op-foto"><img src="images/op-wakawaka-760.webp" width="760" height="425" loading="lazy" decoding="async" alt="Tacos servidos no Waka Waka"></div>
+          <figcaption><b>Waka Waka</b><span>Comida mexicana</span></figcaption>
+        </figure>
+        <figure class="op">
+          <div class="op-foto"><img src="images/op-gustare-760.webp" width="760" height="425" loading="lazy" decoding="async" alt="Massa servida no restaurante Gustare"></div>
+          <figcaption><b>Gustare</b><span>Restaurante</span></figcaption>
+        </figure>
+        <figure class="op">
+          <div class="op-foto"><img src="images/op-buddah-760.webp" width="760" height="425" loading="lazy" decoding="async" alt="Prato de peixe com batatas no Buddah Rasa"></div>
+          <figcaption><b>Buddah Rasa</b><span>Restaurante</span></figcaption>
+        </figure>
+        <figure class="op">
+          <div class="op-foto"><img src="images/op-ovelheiro-760.webp" width="760" height="425" loading="lazy" decoding="async" alt="Sanduíche servido no O Ovelheiro"></div>
+          <figcaption><b>O Ovelheiro</b><span>Lanches</span></figcaption>
+        </figure>
+        <figure class="op">
+          <div class="op-foto"><img src="images/op-greennup-760.webp" width="760" height="425" loading="lazy" decoding="async" alt="Sanduíche natural do Greenn Up"></div>
+          <figcaption><b>Greenn Up</b><span>Alimentação saudável</span></figcaption>
+        </figure>
+        <figure class="op">
+          <div class="op-foto"><img src="images/op-inpot-760.webp" width="760" height="425" loading="lazy" decoding="async" alt="Salada servida em bowl no Inpot"></div>
+          <figcaption><b>Inpot</b><span>Alimentação saudável</span></figcaption>
+        </figure>
+        <figure class="op">
+          <div class="op-foto"><img src="images/op-oakberry-760.webp" width="760" height="425" loading="lazy" decoding="async" alt="Copo de açaí da OakBerry"></div>
+          <figcaption><b>OakBerry</b><span>Açaí</span></figcaption>
+        </figure>
+        <figure class="op">
+          <div class="op-foto"><img src="images/op-pallazzo-760.webp" width="760" height="425" loading="lazy" decoding="async" alt="Interior da Pallazzo Barbearia"></div>
+          <figcaption><b>Pallazzo Barbearia</b><span>Serviços</span></figcaption>
+        </figure>
+      </div>    </div>
+  </section>
+
+  <!-- ====================== 06 · ESTRUTURA ====================== -->
+  <section class="estrutura">
+    <div class="faixa-larga">
+      <div class="cabeca">
+        <h2 class="titulo">Mais do que um passeio<br><em>de fim de semana.</em></h2>
+        <p class="lead lead-claro">
+          O bairro reúne operações que funcionam durante a semana inteira — escola, academias e
+          atendimento — e que explicam por que ele recebe movimento todos os dias.
+        </p>
+      </div>
+
+      <div class="grade-operacoes">
+        <article class="op-card">
+          <figure class="op-quadro">
+            <img src="images/op-psg-800.webp"
+                 srcset="images/op-psg-480.webp 480w, images/op-psg-800.webp 800w"
+                 sizes="(max-width: 899px) 92vw, 24vw"
+                 width="800" height="447" loading="lazy" decoding="async"
+                 alt="Fachada da PSG Academy ao entardecer, com painéis iluminados nas cores do Paris Saint-Germain">
+          </figure>
+          <h3>PSG Academy</h3>
+          <p>A metodologia oficial do Paris Saint-Germain, dentro do bairro.</p>
+        </article>
+
+        <article class="op-card">
+          <figure class="op-quadro">
+            <img src="images/op-bomjesus-800.webp"
+                 srcset="images/op-bomjesus-480.webp 480w, images/op-bomjesus-800.webp 800w"
+                 sizes="(max-width: 899px) 92vw, 24vw"
+                 width="800" height="447" loading="lazy" decoding="async"
+                 alt="Prédio do Colégio Bom Jesus no Vivapark, com o morro ao fundo">
+          </figure>
+          <h3>Colégio Bom Jesus</h3>
+          <p>Ensino regular dentro do Vivapark, a pé de casa.</p>
+        </article>
+
+        <article class="op-card">
+          <figure class="op-quadro">
+            <img src="images/op-wave-800.webp"
+                 srcset="images/op-wave-480.webp 480w, images/op-wave-800.webp 800w"
+                 sizes="(max-width: 899px) 92vw, 24vw"
+                 width="800" height="447" loading="lazy" decoding="async"
+                 alt="Interior da academia Wave, com esteiras e bicicletas voltadas para janelas amplas com vista para a área verde">
+          </figure>
+          <h3>Wave</h3>
+          <p>Academia com os equipamentos voltados para a área verde.</p>
+        </article>
+
+        <article class="op-card">
+          <figure class="op-quadro">
+            <img src="images/op-muv-800.webp"
+                 srcset="images/op-muv-480.webp 480w, images/op-muv-800.webp 800w"
+                 sizes="(max-width: 899px) 92vw, 24vw"
+                 width="800" height="447" loading="lazy" decoding="async"
+                 alt="Fachada da MUV Arena ao entardecer, com o letreiro em néon aceso">
+          </figure>
+          <h3>MUV Arena</h3>
+          <p>Arena esportiva para treino e competição.</p>
+        </article>
+      </div>
+
+      <div class="destaque-clinica">
+        <h3>Clínica Singular</h3>
+        <p>Atendimento a pessoas com autismo e neurodivergentes, no mesmo bairro em que elas moram,
+           estudam e brincam.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== 07 · REGIÃO ====================== -->
+  <section class="regiao">
+    <div class="faixa">
+      <div class="cabeca">
+        <h2 class="titulo">Na Costa Esmeralda,<br><em>entre Itapema e Bombinhas.</em></h2>
+      </div>
+
+      <div class="regiao-grade">
+        <figure class="moldura">
+          <img src="images/regiao-560.webp" width="560" height="520" loading="lazy" decoding="async"
+               alt="Praia de Bombinhas, com mar esverdeado e morro coberto de mata">
+          <figcaption>Praia de Bombinhas, a 10 km</figcaption>
+        </figure>
+
+        <ul class="distancias">
+          <li><b data-conta="2">2</b><u>km</u><span>Aeroporto Costa Esmeralda, em Porto Belo</span></li>
+          <li><b data-conta="10">10</b><u>km</u><span>Praia de Bombinhas</span></li>
+          <li><b data-conta="30">30</b><u>km</u><span>Aeroporto de Navegantes</span></li>
+          <li><b data-conta="40">40</b><u>km</u><span>Beto Carrero World</span></li>
+          <li><b data-conta="55">55</b><u>km</u><span>Aeroporto de Florianópolis</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sai da faixa de propósito: é imagem de satélite da costa inteira, e o
+         assunto dela é a extensão. Dentro de 1240px com canto arredondado ela
+         virava ilustração de apoio; sangrando, ela é o mapa. -->
+    <figure class="mapa">
+      <img src="images/mapa-1100.webp" width="1100" height="527" loading="lazy" decoding="async"
+           alt="Imagem de satélite da Costa Esmeralda: o oceano ao norte, a faixa litorânea com suas penínsulas e praias, e a mata da serra ao sul">
+      <figcaption>Imagem de satélite da região. O acesso é pela BR-101.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ====================== 08 · PLANEJE A VISITA ====================== -->
+  <section class="visita" id="visita">
+    <div class="faixa">
+      <div class="cabeca cabeca-centro">
+        <h2 class="titulo">O que já dá para saber<br><em>antes de vir.</em></h2>
+      </div>
+
+      <div class="grade-visita">
+        <div class="cartao">
+          <h3>Entrada</h3>
+          <p class="cartao-forte">Gratuita</p>
+          <p>O bairro é aberto ao público. Não há bilheteria, ingresso ou reserva para circular pelas
+             áreas livres, praças e pela Rua Viva.</p>
+        </div>
+
+        <div class="cartao">
+          <h3>Onde fica</h3>
+          <p class="cartao-forte">Porto Belo, SC</p>
+          <p>Na Costa Esmeralda, entre Itapema e Bombinhas, com acesso pela BR-101 e a 2 km do
+             Aeroporto Costa Esmeralda.</p>
+        </div>
+
+        <div class="cartao">
+          <h3>Central de Vendas</h3>
+          <p class="cartao-forte">Todos os dias, 8h30 às 19h</p>
+          <p>Horário publicado para quem vai conhecer os empreendimentos. Agende pelo WhatsApp.</p>
+          <a class="elo" href="https://api.whatsapp.com/send?phone=554791025950&amp;text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20visita%20%C3%A0%20Central%20de%20Vendas%20do%20Vivapark%20Porto%20Belo."
+             target="_blank" rel="noopener" data-cta="central">Agendar pelo WhatsApp</a>
+        </div>
+
+        <div class="cartao">
+          <h3>Dias de chuva</h3>
+          <p class="cartao-forte">Atividades podem mudar</p>
+          <p>A programação ao ar livre fica sujeita às condições climáticas e pode ser reagendada.</p>
+        </div>
+      </div>    </div>
+  </section>
+
+  <!-- ====================== 09 · EVENTOS ====================== -->
+  <section class="eventos">
+    <div class="faixa duo">
+      <figure class="moldura moldura-alta">
+        <img src="images/eventos-618.webp" width="618" height="1100" loading="lazy" decoding="async"
+             alt="Duas crianças desenhando em uma mesa durante atividade no Vivapark Porto Belo">
+      </figure>
+
+      <div class="eventos-tx">
+        <h2 class="titulo">Tem sempre<br><em>alguma coisa acontecendo.</em></h2>
+        <p class="lead">
+          O bairro mantém uma programação frequente de eventos e atividades para públicos diferentes —
+          de feiras e espetáculos infantis a corridas de rua. Boa parte é gratuita.
+        </p>
+        <a class="elo" href="https://www.instagram.com/vivaparkoficial/" target="_blank" rel="noopener" data-cta="agenda-ig">
+          Ver a programação no Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- ====================== 11 · CONTATO ====================== -->
+  <section class="contato" id="contato">
+    <div class="faixa contato-in">
+      <h2 class="titulo titulo-grande">Venha conhecer<br><em>o bairro parque.</em></h2>
+      <p class="lead lead-claro">
+        A entrada é gratuita e o bairro está aberto ao público. Para agendar uma visita à Central de
+        Vendas ou tirar dúvidas, fale com a equipe.
+      </p>
+      <div class="contato-acoes">
+        <a class="btn btn-principal" href="https://api.whatsapp.com/send?phone=554791025950&amp;text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20Vivapark%20Porto%20Belo."
+           target="_blank" rel="noopener" data-cta="contato-whats">WhatsApp (47) 9102-5950</a>
+        <a class="btn btn-fantasma" href="https://www.instagram.com/vivaparkoficial/" target="_blank" rel="noopener" data-cta="contato-ig">Instagram</a>
+      </div>
+      <p class="nota">
+        Pendência: o parque não publica e-mail nem telefone fixo de atendimento ao visitante.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <div class="faixa rodape-grade">
+    <div class="rodape-marca">
+      <img src="images/logo.svg" width="150" height="40" alt="Vivapark Porto Belo">
+      <p>O primeiro bairro parque do Brasil.<br>Porto Belo, Santa Catarina.</p>
+      <p class="rodape-vokkan">Um projeto da <a href="https://vokkan.com.br" target="_blank" rel="noopener">Vokkan</a>.</p>
+    </div>
+
+    <nav class="rodape-col" aria-label="Seções do site">
+      <h3>Navegar</h3>
+      <a href="#bairro">O bairro parque</a>
+      <a href="#espacos">Espaços</a>
+      <a href="#operacoes">Lojas e sabores</a>
+      <a href="#visita">Planeje a visita</a>
+    </nav>
+
+    <div class="rodape-col">
+      <h3>Falar com o parque</h3>
+      <a href="https://api.whatsapp.com/send?phone=554791025950" target="_blank" rel="noopener" data-cta="rodape-whats">WhatsApp (47) 9102-5950</a>
+      <a href="https://www.instagram.com/vivaparkoficial/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/@vivaparkportobelo" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://vivaparkportobelo.com.br/politica-de-privacidade" target="_blank" rel="noopener">Política de privacidade</a>
+      <a href="mailto:lgpd@vokkan.com.br">lgpd@vokkan.com.br, para assuntos de LGPD</a>
+    </div>
+  </div>
+
+  <div class="faixa rodape-pe">
+    <p>Imagens oficiais do empreendimento. As perspectivas identificadas como ilustrativas não
+      correspondem a fotografias do local. Informações sujeitas a confirmação junto ao parque.</p>  </div>
+</footer>
+
+<a class="whats-flutuante" id="whatsFlutuante"
+   href="https://api.whatsapp.com/send?phone=554791025950&amp;text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20Vivapark%20Porto%20Belo."
+   target="_blank" rel="noopener" aria-label="Conversar no WhatsApp" data-cta="flutuante">
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.84.5 3.56 1.35 5.04L2 22l5.13-1.34A9.95 9.95 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.6 0-3.1-.42-4.4-1.15l-.31-.18-3.05.8.82-2.97-.2-.32A7.94 7.94 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm4.4-5.95c-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.44-1.34-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.46-.39-.4-.54-.4-.14 0-.3-.02-.46-.02-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28z"/></svg>
+</a>
+
+<script src="js/script.js?v=35"></script>
+</body>
+</html>

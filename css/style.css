@@ -353,8 +353,14 @@ a { color: inherit; }
 .hero-cortina { display: none; }
 body.js .hero-cortina {
   display: block;
-  position: fixed; inset: 0 0 auto 0; z-index: 150;
-  height: 100svh; overflow: hidden;
+  /* `inset: 0`, e NÃO `height: 100svh`. No celular, `svh` é a tela COM a
+     barra de endereço aparecendo — a menor. Mas elemento fixo é posicionado
+     contra a tela GRANDE. Então, assim que a barra se recolhe (que é o que
+     acontece ao rolar), a cortina ficava uns 60 a 100px mais curta que a
+     tela e aparecia uma faixa da página por baixo da tela de carregamento.
+     Com topo e base presos em 0 ela acompanha a tela, seja qual for. */
+  position: fixed; inset: 0; z-index: 150;
+  overflow: hidden;
   background: var(--papel);
   will-change: clip-path, opacity;
 }

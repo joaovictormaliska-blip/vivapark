@@ -276,6 +276,16 @@
     }
   }
 
+  /* ---- a altura de referência ----
+     NÃO ler `window.innerHeight` a cada rolagem para medir o curso da
+     cortina. No celular esse número MUDA ENQUANTO SE ROLA: a barra de
+     endereço se recolhe e a tela cresce uns 60 a 100px. Como ele estava no
+     denominador do progresso, a cortina pulava para trás no meio do gesto —
+     o usuário rolava para baixo e a tela de carregamento voltava a fechar um
+     pouco. Congelada no carregamento, a conta fica estável; só uma troca de
+     verdade (girar o aparelho, redimensionar a janela) a atualiza. */
+  var alturaRef = window.innerHeight;
+
   /* A cortina encolhe para cima. Recorta-se a borda de baixo e desloca-se a
      marca, em vez de animar a altura: assim nada refaz layout por quadro. */
   function abrirCortina(q) {
@@ -285,7 +295,7 @@
       return;
     }
     if (cortina.style.display === 'none') cortina.style.display = 'block';
-    var vh = window.innerHeight;
+    var vh = alturaRef;
     cortina.style.clipPath = 'inset(0 0 ' + (q * 100).toFixed(3) + '% 0)';
     cortina.style.opacity = (1 - trava((q - 0.62) / 0.38)).toFixed(3);
     cortinaIn.style.transform = 'translate3d(0,' + (-q * vh / 2).toFixed(1) + 'px,0) '
@@ -389,7 +399,7 @@
     /* celular: sem voo e sem mola, mas a cortina continua existindo e sobe
        conforme a rolagem — direto, sem quadro intermediário */
     if (cortina && !menosMovimento) {
-      abrirCortina(trava((window.scrollY || window.pageYOffset) / (window.innerHeight * 0.6)));
+      abrirCortina(trava((window.scrollY || window.pageYOffset) / (alturaRef * 0.6)));
     }
   }
 
@@ -476,7 +486,25 @@
       medirOrigem(); aoRolarSeq();
     });
     window.addEventListener('scroll', aoRolarSeq, { passive: true });
+    /* No celular, recolher a barra de endereço dispara `resize` várias vezes
+       DURANTE a rolagem — e cada um refazia todas as medições, no meio do
+       gesto. Só é redimensionamento de verdade quando a largura muda (girar
+       o aparelho, redimensionar a janela) ou quando a altura dá um salto
+       grande; o sobe-e-desce da barra, que é pequeno e só na altura, passa
+       batido. A sequência não perde nada com isso: `destino()` lê a altura
+       viva a cada quadro de qualquer jeito. */
+    var larguraAnt = window.innerWidth, alturaAnt = window.innerHeight;
     window.addEventListener('resize', function () {
+      var l = window.innerWidth, a = window.innerHeight;
+      /* `hover: none` é o sinal honesto de "aparelho com barra que se
+         recolhe". No desktop, mexer só na altura É redimensionar de verdade
+         e precisa remedir — o filtro não pode valer lá. */
+      var semMouse = window.matchMedia('(hover: none)').matches;
+      var daBarra = semMouse && (l === larguraAnt) && Math.abs(a - alturaAnt) <= 150;
+      alturaAnt = a;
+      if (daBarra) return;
+      larguraAnt = l;
+      alturaRef = a;
       verificarZoom(); tetoDoZoom(); medirOrigem(); medirLimiar(); aoRolarSeq();
     });
     window.addEventListener('load', function () { medirOrigem(); aoRolarSeq(); });

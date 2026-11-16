@@ -1,0 +1,23 @@
+# A CLI da Vercel sobe a PASTA LOCAL e NÃO lê o .gitignore. Sem este arquivo,
+# tudo que está aqui na pasta vai para o ar — inclusive o que nunca deveria
+# ser publicado. Mantenha este arquivo em sincronia com o .gitignore.
+
+# Notas internas de trabalho
+NOTAS-DESIGN.md
+PENDENCIAS.md
+
+# Originais brutos das imagens (6 MB). O site não referencia nenhum deles.
+images/_originais/
+
+# bancada de teste, gerada e apagada a cada verificação
+teste-sequencia.html
+
+# repositório e configuração local
+.git/
+.gitignore
+.vercel/
+
+# lixo de sistema
+Thumbs.db
+desktop.ini
+.DS_Store

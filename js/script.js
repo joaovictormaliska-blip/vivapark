@@ -286,6 +286,36 @@
      verdade (girar o aparelho, redimensionar a janela) a atualiza. */
   var alturaRef = window.innerHeight;
 
+  /* ---- a saída da cortina no CELULAR ----
+     No desktop a cortina sobe conforme a rolagem, e isso funciona porque lá
+     a abertura fica GRUDADA num palco de 320svh: a página não anda enquanto
+     a cortina se levanta.
+
+     No celular não há palco — a abertura é uma seção comum. A cortina subia
+     ao longo de 0,6 de uma tela de rolagem e, atrás dela, a página rolava
+     junto. Medido num aparelho de 812px: quando a cortina enfim saía, a
+     rolagem já estava em 487px e 60% da primeira dobra TINHA PASSADO por
+     trás da tela de carregamento. Era o "ele pula a primeira dobra".
+
+     Agora ela sobe sozinha, por tempo, sem gastar rolagem nenhuma. Quem
+     rolar antes da hora apenas antecipa a saída — e a página continua no
+     topo da primeira dobra. A subida é uma transição CSS: roda no
+     compositor, não depende de quadro nem de script a cada passo. */
+  var cortinaSubiu = false;
+  function levantarCortina() {
+    if (cortinaSubiu || !cortina) return;
+    cortinaSubiu = true;
+    /* limpar o que `abrirCortina` possa ter escrito: estilo em linha ganha
+       da classe, e a transição não sairia do lugar */
+    cortina.style.clipPath = '';
+    cortina.style.opacity = '';
+    cortinaIn.style.transform = '';
+    cortinaIn.style.opacity = '';
+    if (cortinaSeta) cortinaSeta.style.opacity = '';
+    cortina.classList.add('subiu');
+    setTimeout(function () { cortina.style.display = 'none'; }, 1200);
+  }
+
   /* A cortina encolhe para cima. Recorta-se a borda de baixo e desloca-se a
      marca, em vez de animar a altura: assim nada refaz layout por quadro. */
   function abrirCortina(q) {
@@ -396,10 +426,10 @@
       if (!raf) { ultimoMs = 0; raf = requestAnimationFrame(quadro); }
       return;
     }
-    /* celular: sem voo e sem mola, mas a cortina continua existindo e sobe
-       conforme a rolagem — direto, sem quadro intermediário */
-    if (cortina && !menosMovimento) {
-      abrirCortina(trava((window.scrollY || window.pageYOffset) / (alturaRef * 0.6)));
+    /* Celular: sem voo e sem mola. E a cortina NÃO sobe conforme a rolagem —
+       ver `levantarCortina`. Rolar só antecipa a saída dela. */
+    if (cortina && !menosMovimento && (window.scrollY || window.pageYOffset) > 0) {
+      levantarCortina();
     }
   }
 
@@ -480,6 +510,12 @@
       };
       requestAnimationFrame(function () { requestAnimationFrame(escrever); });
       setTimeout(escrever, 80);
+
+      /* No celular ninguém levanta a cortina: não há linha do tempo de voo.
+         Ela sai sozinha, depois que a marca terminou de se escrever — o
+         último traço entra em 993ms e leva 660ms para aparecer, então 1,9s
+         deixa a marca inteira à vista antes de começar a subir. */
+      if (!zoomLigado) setTimeout(levantarCortina, 1900);
     }
 
     if (fotoHero && !fotoHero.complete) fotoHero.addEventListener('load', function () {

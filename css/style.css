@@ -362,8 +362,27 @@ body.js .hero-cortina {
   position: fixed; inset: 0; z-index: 150;
   overflow: hidden;
   background: var(--papel);
+  /* o estado de partida precisa existir no CSS, senão a transição da classe
+     `subiu` não tem de onde sair */
+  clip-path: inset(0 0 0% 0);
   will-change: clip-path, opacity;
 }
+
+/* A saída no celular. No desktop esta classe nunca entra — lá quem comanda é
+   a rolagem, escrevendo clip-path em linha a cada quadro. Aqui a transição
+   roda no compositor e não depende de script a cada passo. */
+body.js .hero-cortina.subiu {
+  clip-path: inset(0 0 100% 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: clip-path .85s cubic-bezier(.65, 0, .35, 1), opacity .7s ease .15s;
+}
+body.js .hero-cortina.subiu .hero-cortina-in {
+  opacity: 0;
+  transform: translate3d(0, -12%, 0) translateY(-50%) scale(.94);
+  transition: opacity .45s ease, transform .85s cubic-bezier(.65, 0, .35, 1);
+}
+body.js .hero-cortina.subiu .hero-cortina-seta { opacity: 0; transition: opacity .3s ease; }
 .hero-cortina-in {
   position: absolute; left: 0; right: 0; top: 50%;
   padding: 0 24px;

@@ -215,8 +215,15 @@
   var VOO_A = 0.50, VOO_B = 0.84;         // o voo para dentro da janela
   var LUZ_A  = 0.62, LUZ_B  = 0.80;       // a luz da janela floresce
   /* o estouro: sobe, SEGURA claro, e só então abre na dobra */
-  var FLASH_A = 0.70, FLASH_B = 0.80, FLASH_C = 0.83, FLASH_D = 0.88;
-  var TROCA = 0.815;                      // a cena some atrás da luz cheia
+  /* O branco sobe, SEGURA, e só então desliza para fora.
+     A saída começa em 0,87 e vai até o fim do palco: são 0,13 do curso, uns
+     235px de rolagem, contra os 90px de antes — era essa pressa que fazia a
+     passagem parecer um corte. E ela cai quase inteira em cima da dobra JÁ
+     PARADA: a dobra de baixo encosta no topo em 0,88 e a trava a segura até
+     1,198. O branco escorrega sobre uma cena imóvel, que é o que dá a
+     sensação de deslizar. */
+  var FLASH_A = 0.68, FLASH_B = 0.79, FLASH_C = 0.87, FLASH_D = 1.00;
+  var TROCA = 0.82;                       // a cena some atrás da luz cheia
 
   /* Teto de ampliação com folga para a textura da GPU, como no Evolution:
      entre 8x e 16x conforme o tamanho e a densidade da tela. Aqui a imagem
@@ -247,7 +254,7 @@
         hero.classList.remove('voando');
         voando = false;
       }
-      if (flash) flash.style.opacity = '0';
+      if (flash) { flash.style.opacity = '0'; flash.style.transform = ''; }
       /* A cortina FICA no celular — é a tela de carregamento, não parte do
          voo. Só que lá não há linha do tempo para levantá-la, então ela sobe
          com a própria rolagem, nos primeiros 60% de uma tela. */
@@ -307,6 +314,7 @@
     cortinaSubiu = true;
     /* limpar o que `abrirCortina` possa ter escrito: estilo em linha ganha
        da classe, e a transição não sairia do lugar */
+    cortina.style.webkitClipPath = '';
     cortina.style.clipPath = '';
     cortina.style.opacity = '';
     cortinaIn.style.transform = '';
@@ -326,7 +334,11 @@
     }
     if (cortina.style.display === 'none') cortina.style.display = 'block';
     var vh = alturaRef;
-    cortina.style.clipPath = 'inset(0 0 ' + (q * 100).toFixed(3) + '% 0)';
+    var recorte = 'inset(0 0 ' + (q * 100).toFixed(3) + '% 0)';
+    /* o prefixo junto: Safari antigo só entende `-webkit-clip-path`, e sem
+       ele a cortina nunca se abriria no iOS */
+    cortina.style.webkitClipPath = recorte;
+    cortina.style.clipPath = recorte;
     cortina.style.opacity = (1 - trava((q - 0.62) / 0.38)).toFixed(3);
     cortinaIn.style.transform = 'translate3d(0,' + (-q * vh / 2).toFixed(1) + 'px,0) '
       + 'translateY(-50%) scale(' + (1 - 0.40 * desacelera(q)).toFixed(4) + ')';
@@ -385,11 +397,18 @@
       suavizar(trava((p - LUZ_A) / (LUZ_B - LUZ_A))).toFixed(3));
 
     /* ---- a troca ----
-       O estouro sobe, SEGURA, e só então abre. A cena some no meio do branco,
-       nunca à vista: é aí que a dobra de baixo assume. */
-    if (flash) flash.style.opacity = (p < FLASH_C
-      ? suavizar(trava((p - FLASH_A) / (FLASH_B - FLASH_A)))
-      : 1 - suavizar(trava((p - FLASH_C) / (FLASH_D - FLASH_C)))).toFixed(3);
+       O branco sobe por opacidade, segura, e sai por MOVIMENTO: desliza para
+       cima levando a borda macia consigo. A opacidade só volta a entrar no
+       último sexto, para o fiapo final não deixar borda dura. A cena some no
+       meio do branco cheio, nunca à vista. */
+    var subida = suavizar(trava((p - FLASH_A) / (FLASH_B - FLASH_A)));
+    var saida = suavizar(trava((p - FLASH_C) / (FLASH_D - FLASH_C)));
+    if (flash) {
+      flash.style.opacity = (subida * (1 - trava((saida - 0.84) / 0.16))).toFixed(3);
+      /* -112% da própria caixa (que tem 150% da tela) leva o degradê inteiro
+         para cima do topo — não sobra fiapo preso na borda */
+      flash.style.transform = 'translate3d(0,' + (-112 * saida).toFixed(2) + '%,0)';
+    }
 
     var trocou = p >= TROCA;
     zoom.style.visibility = trocou ? 'hidden' : '';

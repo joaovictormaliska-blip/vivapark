@@ -252,6 +252,7 @@ a { color: inherit; }
 .topo {
   position: fixed; inset: 0 0 auto; z-index: 110;
   background: rgba(247,243,234,.93);
+  -webkit-backdrop-filter: saturate(150%) blur(14px);
   backdrop-filter: saturate(150%) blur(14px);
   box-shadow: 0 1px 0 rgba(20,33,26,.10);
   transform: translateY(-100%);
@@ -364,6 +365,7 @@ body.js .hero-cortina {
   background: var(--papel);
   /* o estado de partida precisa existir no CSS, senão a transição da classe
      `subiu` não tem de onde sair */
+  -webkit-clip-path: inset(0 0 0% 0);
   clip-path: inset(0 0 0% 0);
   will-change: clip-path, opacity;
 }
@@ -372,6 +374,7 @@ body.js .hero-cortina {
    a rolagem, escrevendo clip-path em linha a cada quadro. Aqui a transição
    roda no compositor e não depende de script a cada passo. */
 body.js .hero-cortina.subiu {
+  -webkit-clip-path: inset(0 0 100% 0);
   clip-path: inset(0 0 100% 0);
   opacity: 0;
   pointer-events: none;
@@ -405,28 +408,44 @@ body.js .hero-cortina.subiu .hero-cortina-seta { opacity: 0; transition: opacity
   text-transform: uppercase; text-align: center;
   color: var(--tinta-45);
 }
+/* Uma seta, e só. Antes era um traço vertical de 38px com um bico no fim —
+   um medidor, não um sinal. Agora é o bico sozinho, que qualquer um lê como
+   "para baixo" sem precisar interpretar.
+
+   Medidas a partir do CELULAR: 22px é o alvo mínimo confortável com o polegar
+   e o respiro de baixo é curto, porque ali a tela é menor. Telas maiores
+   crescem a partir daí, e não o contrário. */
 .hero-cortina-seta {
-  position: absolute; left: 50%; bottom: 46px;
-  width: 1px; height: 38px;
-  background: linear-gradient(180deg, rgba(20,33,26,0), rgba(20,33,26,.75));
-  animation: cortinaSeta 2.2s ease-in-out infinite;
+  position: absolute; left: 50%; bottom: 30px;
+  width: 22px; height: 22px;
+  margin-left: -11px;
+  animation: cortinaSeta 2.4s cubic-bezier(.45, 0, .25, 1) infinite;
 }
 .hero-cortina-seta::after {
-  content: ""; position: absolute; left: -4px; bottom: 0;
-  width: 10px; height: 10px;
-  border-right: 1px solid rgba(20,33,26,.75);
-  border-bottom: 1px solid rgba(20,33,26,.75);
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: 13px; height: 13px;
+  margin: -9px 0 0 -7px;
+  border-right: 1.5px solid rgba(20,33,26,.62);
+  border-bottom: 1.5px solid rgba(20,33,26,.62);
   transform: rotate(45deg);
 }
 @keyframes cortinaSeta {
-  0%, 100% { transform: translateY(-6px); opacity: .45; }
-  50%      { transform: translateY(2px);  opacity: 1; }
+  0%, 100% { transform: translateY(-4px); opacity: .45; }
+  50%      { transform: translateY(4px);  opacity: 1; }
+}
+/* Quem pediu menos movimento recebe a seta parada, não a seta ausente: o
+   sinal continua, só não pulsa. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-cortina-seta { animation: none; opacity: .8; }
+}
+@media (min-width: 641px) {
+  .hero-cortina-seta { bottom: 44px; width: 26px; height: 26px; margin-left: -13px; }
+  .hero-cortina-seta::after { width: 15px; height: 15px; margin: -10px 0 0 -8px; }
 }
 /* No celular a marca cresce e abre o espacejamento: com a conta de tela larga
    ela caía para 18px e sumia no meio da tela vazia. */
 @media (max-width: 640px) {
   .hero-cortina-marca svg { width: min(62vw, 300px); }
-  .hero-cortina-seta { bottom: 36px; }
 }
 /* A marca se escreve traço a traço assim que a página abre. As unidades aqui
    são os caminhos do SVG do logotipo, não letras de texto — por isso nada de
@@ -456,12 +475,24 @@ body.js .hero-cortina [data-intro].entrou .hero-letra { opacity: 1; transform: n
       rgba(255,252,240,.98) 0%, rgba(255,250,232,.80) 3%,
       rgba(252,247,224,.42) 7%, rgba(250,245,220,0) 16%);
   }
+  /* O branco não apaga: ele DESLIZA para cima e sai de cena, com a borda de
+     baixo macia. Por isso a caixa é meia tela mais alta que a tela — a sobra
+     é onde mora o degradê da borda, escondida abaixo do corte do `.hero`
+     enquanto o branco está parado. Sem essa sobra, a borda seria uma linha
+     reta atravessando a tela, e é isso que faz uma passagem parecer um corte
+     em vez de um movimento. `transform` e `opacity` são as duas únicas
+     propriedades que o compositor anima sozinho — no iOS isso é a diferença
+     entre deslizar e tropeçar. */
   body.js .hero-flash {
     display: block;
-    position: absolute; inset: 0; z-index: 5;
+    position: absolute; left: 0; right: 0; top: 0;
+    height: 150%;
+    z-index: 5;
     pointer-events: none;
-    background: #FBFAF3;
+    background: linear-gradient(to top,
+      rgba(251,250,243,0) 0%, rgba(251,250,243,.55) 11%, #FBFAF3 23%, #FBFAF3 100%);
     opacity: 0;
+    will-change: transform, opacity;
   }
 }
 
@@ -595,6 +626,7 @@ body.js .hero-cortina [data-intro].entrou .hero-letra { opacity: 1; transform: n
   padding: .38rem .78rem;
   border-radius: 999px;
   background: rgba(12,16,14,.55);
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   color: var(--sobre-70);
   font-size: .66rem; font-weight: 500;
@@ -873,6 +905,7 @@ body.js .hero-cortina [data-intro].entrou .hero-letra { opacity: 1; transform: n
   padding: .36rem .72rem;
   border-radius: 999px;
   background: rgba(11,35,24,.62);
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   color: var(--sobre-70);
   font-size: .66rem;
@@ -1418,10 +1451,12 @@ body.js [data-entra].visivel {
 
 /* títulos: cortina de cima para baixo */
 body.js [data-revela] {
+  -webkit-clip-path: inset(0 -12% 104% -6%);
   clip-path: inset(0 -12% 104% -6%);
   transform: translateY(.1em);
 }
 body.js [data-revela].visivel {
+  -webkit-clip-path: inset(-18% -12% -22% -6%);
   clip-path: inset(-18% -12% -22% -6%);
   transform: none;
   transition: clip-path 1.15s var(--curva), transform 1.15s var(--curva);
@@ -1449,6 +1484,7 @@ body.js .hero.pronta .hero-foto img {
   body.js .planta .pt i,
   body.js .planta .pt b {
     opacity: 1 !important;
+    -webkit-clip-path: none !important;
     clip-path: none !important;
     transition: none !important;
   }
